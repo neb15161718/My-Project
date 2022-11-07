@@ -12,8 +12,7 @@ public class Movement : MonoBehaviour
     GameObject player;
     new Collider collider;
     bool isGrounded = true;
-    float jumpX = 0;
-    float jumpY = 0;
+    float jumpDirection = 0;
 
     void Start()
     {
@@ -45,10 +44,9 @@ public class Movement : MonoBehaviour
                 characterRigidbody.MoveRotation(targetRotation);
             }
         }
-        if (isGrounded == false & (inputVector.x != jumpX || inputVector.y != jumpY))
-        // fix movement when in midair, move slower when facing further away from direction facing when jump pressed, study other games
+        if (isGrounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
         {
-            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 50f, ForceMode.Force);
+            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 100f, ForceMode.Force);
         }
         else
         {
@@ -58,7 +56,7 @@ public class Movement : MonoBehaviour
         characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
         if (characterRigidbody.velocity.magnitude > 8f)
         {
-            characterRigidbody.velocity = characterRigidbody.velocity.normalized * 8f;
+            characterRigidbody.velocity = characterRigidbody.velocity.normalized * 6f;
         }
         characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, tempY, characterRigidbody.velocity.z);
         if (inputVector.x != 0 || inputVector.y != 0)
@@ -79,15 +77,13 @@ public class Movement : MonoBehaviour
             collider.material.dynamicFriction = 3;
             collider.material.staticFriction = 3;
         }
-        Debug.Log(inputVector.x);
-        Debug.Log(inputVector.y);
     }
 
     void Jump(InputAction.CallbackContext context)
     {
         if (context.performed & isGrounded == true)
         {
-           characterRigidbody.AddForce(Vector3.up * 6f, ForceMode.Impulse);
+           characterRigidbody.AddForce(Vector3.up * 9f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);
         }
     }
@@ -109,8 +105,7 @@ public class Movement : MonoBehaviour
             isGrounded = false;
             animator.SetBool("Grounded", false);
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-            jumpX = inputVector.x;
-            jumpY = inputVector.y;
+            jumpDirection = transform.eulerAngles.y;
         }
     }
 }
