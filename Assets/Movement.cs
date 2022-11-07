@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     GameObject player;
     new Collider collider;
     bool isGrounded = true;
+    float jumpX = 0;
+    float jumpY = 0;
 
     void Start()
     {
@@ -43,7 +45,15 @@ public class Movement : MonoBehaviour
                 characterRigidbody.MoveRotation(targetRotation);
             }
         }
-        characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 200f, ForceMode.Force);
+        if (isGrounded == false & (inputVector.x != jumpX || inputVector.y != jumpY))
+        // fix movement when in midair, move slower when facing further away from direction facing when jump pressed, study other games
+        {
+            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 50f, ForceMode.Force);
+        }
+        else
+        {
+            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 200f, ForceMode.Force);
+        }
         float tempY = characterRigidbody.velocity.y;
         characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
         if (characterRigidbody.velocity.magnitude > 8f)
@@ -69,13 +79,16 @@ public class Movement : MonoBehaviour
             collider.material.dynamicFriction = 3;
             collider.material.staticFriction = 3;
         }
+        Debug.Log(inputVector.x);
+        Debug.Log(inputVector.y);
     }
 
     void Jump(InputAction.CallbackContext context)
     {
         if (context.performed & isGrounded == true)
         {
-           characterRigidbody.AddForce(Vector3.up * 4f, ForceMode.Impulse);
+           characterRigidbody.AddForce(Vector3.up * 6f, ForceMode.Impulse);
+            animator.SetBool("Jumping", true);
         }
     }
 
@@ -84,6 +97,8 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.name == "Terrain")
         {
             isGrounded = true;
+            animator.SetBool("Grounded", true);
+            animator.SetBool("Jumping", false);
         }
     }
 
@@ -92,6 +107,10 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.name == "Terrain")
         {
             isGrounded = false;
+            animator.SetBool("Grounded", false);
+            Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+            jumpX = inputVector.x;
+            jumpY = inputVector.y;
         }
     }
 }
