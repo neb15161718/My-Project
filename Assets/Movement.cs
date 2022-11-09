@@ -50,7 +50,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 200f, ForceMode.Force);
+            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 250f, ForceMode.Force);
         }
         float tempY = characterRigidbody.velocity.y;
         characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
