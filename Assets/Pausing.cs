@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 public class Pausing : MonoBehaviour
 {
-    PlayerInput playerInput;
-    Actions playerInputActions;
-    GameObject player;
     public bool paused = false;
+    public TextMeshProUGUI pauseText;
+    public Button saveButton;
 
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        playerInputActions = new Actions();
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Pause.performed += Pause;
+        pauseText.enabled = false;
+        saveButton.gameObject.SetActive(false);
     }
 
     void Update()
@@ -23,17 +22,21 @@ public class Pausing : MonoBehaviour
 
     }
         
-    void Pause(InputAction.CallbackContext context)
+    public void Pause(InputAction.CallbackContext context)
     {
         if (paused == false)
         {
             Time.timeScale = 0;
             paused = true;
+            pauseText.enabled = true;
+            saveButton.gameObject.SetActive(true);
         }
         else
         {   
             Time.timeScale = 1;
             paused = false;
+            pauseText.enabled = false;
+            saveButton.gameObject.SetActive(false);
         }
     }
 }

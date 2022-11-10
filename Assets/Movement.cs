@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     Rigidbody characterRigidbody;
-    PlayerInput playerInput;
     Actions playerInputActions;
     Animator animator;
     GameObject player;
@@ -22,10 +21,8 @@ public class Movement : MonoBehaviour
         collider.material.dynamicFriction = 3;
         collider.material.staticFriction = 3;
         characterRigidbody = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
         playerInputActions = new Actions();
         playerInputActions.Player.Enable();
-        playerInputActions.Player.Jump.performed += Jump;
         pausing = GetComponent<Pausing>();
     }
 
@@ -81,11 +78,11 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void Jump(InputAction.CallbackContext context)
+    public void Jump(InputAction.CallbackContext context)
     {
         if (context.performed & isGrounded == true & pausing.paused == false)
         {
-           characterRigidbody.AddForce(Vector3.up * 9f, ForceMode.Impulse);
+           characterRigidbody.AddForce(Vector3.up * 18f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);
         }
     }
