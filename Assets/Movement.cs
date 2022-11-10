@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     new Collider collider;
     bool isGrounded = true;
     float jumpDirection = 0;
+    Pausing pausing;
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class Movement : MonoBehaviour
         playerInputActions = new Actions();
         playerInputActions.Player.Enable();
         playerInputActions.Player.Jump.performed += Jump;
+        pausing = GetComponent<Pausing>();
     }
 
     void FixedUpdate()
@@ -81,7 +83,7 @@ public class Movement : MonoBehaviour
 
     void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed & isGrounded == true)
+        if (context.performed & isGrounded == true & pausing.paused == false)
         {
            characterRigidbody.AddForce(Vector3.up * 9f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);
