@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveButton : MonoBehaviour
+public class LoadButton : MonoBehaviour
 {
     void Start()
     {
@@ -14,9 +14,8 @@ public class SaveButton : MonoBehaviour
         
     }
 
-    public void Save()
+    public void Load()
     {
-        SaveGame.Instance.Save();
-        Debug.Log("H");
+        SaveGame.Instance.Load();
     }
 }

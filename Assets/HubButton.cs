@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SaveButton : MonoBehaviour
+public class HubButton : MonoBehaviour
 {
     void Start()
     {
@@ -14,9 +15,8 @@ public class SaveButton : MonoBehaviour
         
     }
 
-    public void Save()
+    public void ToHub()
     {
-        SaveGame.Instance.Save();
-        Debug.Log("H");
+        SceneManager.LoadScene("HubWorld");
     }
 }

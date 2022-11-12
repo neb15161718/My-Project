@@ -10,11 +10,15 @@ public class Pausing : MonoBehaviour
     public bool paused = false;
     public TextMeshProUGUI pauseText;
     public Button saveButton;
+    public Button loadButton;
+    public Button hubButton;
 
     void Start()
     {
         pauseText.enabled = false;
         saveButton.gameObject.SetActive(false);
+        loadButton.gameObject.SetActive(false);
+        hubButton.gameObject.SetActive(false);
     }
 
     void Update()
@@ -30,6 +34,8 @@ public class Pausing : MonoBehaviour
             paused = true;
             pauseText.enabled = true;
             saveButton.gameObject.SetActive(true);
+            loadButton.gameObject.SetActive(true);
+            hubButton.gameObject.SetActive(true);
         }
         else
         {   
@@ -37,6 +43,8 @@ public class Pausing : MonoBehaviour
             paused = false;
             pauseText.enabled = false;
             saveButton.gameObject.SetActive(false);
+            loadButton.gameObject.SetActive(false);
+            hubButton.gameObject.SetActive(false);
         }
     }
 }

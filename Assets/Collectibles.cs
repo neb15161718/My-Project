@@ -6,7 +6,7 @@ using TMPro;
 public class Collectibles : MonoBehaviour
 {
     public static Collectibles Instance;
-    int stars;
+    public int stars;
     public TextMeshProUGUI starDisplay;
 
     void Start()

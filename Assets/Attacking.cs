@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class SaveButton : MonoBehaviour
+public class Attacking : MonoBehaviour
 {
+
     void Start()
     {
         
@@ -14,9 +16,8 @@ public class SaveButton : MonoBehaviour
         
     }
 
-    public void Save()
+    public void Attack(InputAction.CallbackContext context)
     {
-        SaveGame.Instance.Save();
         Debug.Log("H");
     }
 }
