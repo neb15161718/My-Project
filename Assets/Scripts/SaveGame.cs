@@ -23,7 +23,7 @@ public class SaveGame : MonoBehaviour
 
     public void Save()
     {
-        File.WriteAllText(Application.persistentDataPath + "/Save.json", collectibles.stars.ToString());
+        File.WriteAllText(Application.persistentDataPath + "/Save.json", string.Join(",", collectibles.starList));
     }
 
     public void Load()

@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
         touchingPlayer = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
         transform.LookAt(target);
@@ -30,7 +30,6 @@ public class Enemy : MonoBehaviour
         {
             animator.SetBool("Moving", true);
         }
-        Debug.Log(health);
     }
     void OnTriggerEnter(Collider other)
     {

@@ -17,6 +17,5 @@ public class SaveButton : MonoBehaviour
     public void Save()
     {
         SaveGame.Instance.Save();
-        Debug.Log("H");
     }
 }
