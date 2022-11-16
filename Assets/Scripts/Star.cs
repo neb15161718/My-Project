@@ -20,6 +20,7 @@ public class Star : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Collectibles.Instance.AddStar(gameObject.name);
+            gameObject.SetActive(false);
         }
     }
 }
