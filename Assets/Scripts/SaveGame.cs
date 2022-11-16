@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using System.Linq;
 
 public class SaveGame : MonoBehaviour
 {
@@ -29,14 +29,14 @@ public class SaveGame : MonoBehaviour
 
     public void Load()
     {
-        //collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/Save.json")).Split(",");
-        collectibles.starList = Array.ConvertAll(File.ReadAllText(Application.persistentDataPath + "/Save.json")).Split(","), element => bool.Parse(element));
+        collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/Save.json")).Split(",");
         Debug.Log(collectibles.starList[0]);
         foreach (GameObject stars in GameObject.FindGameObjectsWithTag("Star"))
         {
-            if (collectibles.starList[int.Parse(name.Substring(name.Length - 2))] == true)
+            if (collectibles.starList[int.Parse(stars.name.Substring(stars.name.Length - 2))] == "1")
             {
                 stars.gameObject.SetActive(false);
+                collectibles.stars = collectibles.starList.Count(s => s == "1");
             }
         }
     }
