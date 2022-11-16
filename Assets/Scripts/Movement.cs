@@ -32,39 +32,42 @@ public class Movement : MonoBehaviour
         {
             return;
         }
-        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-        Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
-        if (inputVector != Vector2.zero)
+        if (Attacking.Instance.dead == false)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(movementVector);
-            targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * Time.fixedDeltaTime);
+            Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+            Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
+            if (inputVector != Vector2.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(movementVector);
+                targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * Time.fixedDeltaTime);
+                if (inputVector.x != 0 || inputVector.y != 0)
+                {
+                    characterRigidbody.MoveRotation(targetRotation);
+                }
+            }
+            if (isGrounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
+            {
+                characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 100f, ForceMode.Force);
+            }
+            else
+            {
+                characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 250f, ForceMode.Force);
+            }
+            float tempY = characterRigidbody.velocity.y;
+            characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
+            if (characterRigidbody.velocity.magnitude > 8f)
+            {
+                characterRigidbody.velocity = characterRigidbody.velocity.normalized * 6f;
+            }
+            characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, tempY, characterRigidbody.velocity.z);
             if (inputVector.x != 0 || inputVector.y != 0)
             {
-                characterRigidbody.MoveRotation(targetRotation);
+                animator.SetBool("Moving", true);
             }
-        }
-        if (isGrounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
-        {
-            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 100f, ForceMode.Force);
-        }
-        else
-        {
-            characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 250f, ForceMode.Force);
-        }
-        float tempY = characterRigidbody.velocity.y;
-        characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
-        if (characterRigidbody.velocity.magnitude > 8f)
-        {
-            characterRigidbody.velocity = characterRigidbody.velocity.normalized * 6f;
-        }
-        characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, tempY, characterRigidbody.velocity.z);
-        if (inputVector.x != 0 || inputVector.y != 0)
-        {
-            animator.SetBool("Moving", true);
-        }
-        else
-        {
-            animator.SetBool("Moving", false);
+            else
+            {
+                animator.SetBool("Moving", false);
+            }
         }
         if (isGrounded == false)
         {
@@ -80,7 +83,7 @@ public class Movement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed & isGrounded == true & pausing.paused == false)
+        if (context.performed & isGrounded == true & pausing.paused == false & Attacking.Instance.dead == false)
         {
            characterRigidbody.AddForce(Vector3.up * 18f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);

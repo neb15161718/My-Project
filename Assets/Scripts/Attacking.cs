@@ -13,13 +13,17 @@ public class Attacking : MonoBehaviour
     Enemy enemy;
     public static Attacking Instance;
     GameObject closest;
+    public bool dead;
+    Rigidbody characterRigidBody;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        health = 10;
+        health = 5;
         Instance = this;
         closest = null;
+        dead = false;
+        characterRigidBody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -29,7 +33,7 @@ public class Attacking : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed & dead == false)
         {
             animator.SetTrigger("Attack");
             foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -62,5 +66,19 @@ public class Attacking : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public void Die()
+    {
+        StartCoroutine(Died());
+    }
+    
+    IEnumerator Died()
+    {
+        dead = true;
+        animator.SetTrigger("Die");
+        animator.SetBool("Moving", false);
+        yield return new WaitForSeconds(3);
+        Time.timeScale = 0;
     }
 }
