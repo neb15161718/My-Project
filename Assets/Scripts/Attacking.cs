@@ -42,6 +42,10 @@ public class Attacking : MonoBehaviour
                 if (enemy.touchingPlayer == true)
                 {
                     enemy.health = enemy.health - 1;
+                    if (enemy.health == 0)
+                    {
+                        enemy.Die();
+                    }
                 }
             }
             closest = FindClosestEnemy();

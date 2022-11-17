@@ -9,17 +9,19 @@ public class Enemy : MonoBehaviour
     Animator animator;
     public int health;
     public bool touchingPlayer;
+    bool dead;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         health = 3;
         touchingPlayer = false;
+        dead = false;
     }
 
     void FixedUpdate()
     {
-        if (touchingPlayer == false);
+        if (touchingPlayer == false & dead == false)
         {
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             transform.LookAt(target);
@@ -54,15 +56,32 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Attack()
     {
-        animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.1f);
-        if (touchingPlayer == true)
+        if (dead == false)
         {
-            Attacking.Instance.health = Attacking.Instance.health - 1;
-            if (Attacking.Instance.health == 0)
+            animator.SetTrigger("Attack");
+            yield return new WaitForSeconds(1.1f);
+            if (touchingPlayer == true)
             {
-                Attacking.Instance.Die();
+                Attacking.Instance.health = Attacking.Instance.health - 1;
+                if (Attacking.Instance.health == 0)
+                {
+                    Attacking.Instance.Die();
+                }
             }
-        }
+        }    
+    }
+
+    public void Die()
+    {
+        StartCoroutine(Died());
+    }
+
+    IEnumerator Died()
+    {
+        dead = true;
+        animator.SetTrigger("Die");
+        animator.SetBool("Moving", false);
+        yield return new WaitForSeconds(3);
+        gameObject.SetActive(false);
     }
 }
