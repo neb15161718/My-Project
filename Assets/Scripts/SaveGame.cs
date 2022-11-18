@@ -10,6 +10,7 @@ public class SaveGame : MonoBehaviour
     public static SaveGame Instance;
     Collectibles collectibles;
     public TextAsset saveJson;
+    public GameObject allStars;
 
     void Start()
     {
@@ -30,13 +31,17 @@ public class SaveGame : MonoBehaviour
     public void Load()
     {
         collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/Save.json")).Split(",");
-        Debug.Log(collectibles.starList[0]);
-        foreach (GameObject stars in GameObject.FindGameObjectsWithTag("Star"))
+        collectibles.stars = 0;
+        Transform[] starList = allStars.GetComponentsInChildren<Transform>(true);
+        foreach(Transform stars in starList)
         {
-            if (collectibles.starList[int.Parse(stars.name.Substring(stars.name.Length - 2))] == "1")
+            stars.gameObject.SetActive(true);
+            Debug.Log(stars.gameObject.name);
+            if (collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
             {
                 stars.gameObject.SetActive(false);
-                collectibles.stars = collectibles.starList.Count(s => s == "1");
+                collectibles.stars = collectibles.stars + 1;
+                //collectibles.stars = collectibles.starList.Count(s => s == "1");
             }
         }
     }

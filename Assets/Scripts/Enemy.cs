@@ -24,9 +24,18 @@ public class Enemy : MonoBehaviour
         if (touchingPlayer == false & dead == false)
         {
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-            transform.LookAt(target);
-            transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
-            animator.SetBool("Moving", true);
+            Vector3 difference = target - new Vector3(transform.position.x, 0, transform.position.z);
+            float diff = difference.sqrMagnitude;
+            if (diff < 50)
+            {
+                transform.LookAt(target);
+                transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
+                animator.SetBool("Moving", true);
+            }
+            else
+            {
+                animator.SetBool("Moving", false);
+            }
         }
         else
         {
