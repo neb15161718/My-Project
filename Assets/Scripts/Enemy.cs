@@ -26,14 +26,11 @@ public class Enemy : MonoBehaviour
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             transform.LookAt(target);
             transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
-            if (transform.position == target)
-            {
-                animator.SetBool("Moving", false);
-            }
-            else
-            {
-                animator.SetBool("Moving", true);
-            }
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
         }
     }
 
@@ -56,7 +53,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Attack()
     {
-        if (dead == false)
+        while (dead == false & touchingPlayer == true)
         {
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(1.1f);
@@ -68,7 +65,8 @@ public class Enemy : MonoBehaviour
                     Attacking.Instance.Die();
                 }
             }
-        }    
+            yield return new WaitForSeconds(3);
+        }  
     }
 
     public void Die()
