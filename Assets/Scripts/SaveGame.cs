@@ -32,16 +32,17 @@ public class SaveGame : MonoBehaviour
     {
         collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/Save.json")).Split(",");
         collectibles.stars = 0;
-        Transform[] starList = allStars.GetComponentsInChildren<Transform>(true);
+        Transform[] starList = allStars.gameObject.GetComponentsInChildren<Transform>(true);
         foreach(Transform stars in starList)
         {
-            stars.gameObject.SetActive(true);
-            Debug.Log(stars.gameObject.name);
-            if (collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
+            if (stars.gameObject.name != ("Stars"))
             {
-                stars.gameObject.SetActive(false);
-                collectibles.stars = collectibles.stars + 1;
-                //collectibles.stars = collectibles.starList.Count(s => s == "1");
+                stars.gameObject.SetActive(true);
+                if (collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
+                {
+                    stars.gameObject.SetActive(false);
+                    collectibles.stars = collectibles.stars + 1;
+                }
             }
         }
     }

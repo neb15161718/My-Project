@@ -2511,6 +2511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stars: 0
   starDisplay: {fileID: 0}
+  starList: []
 --- !u!114 &1456913430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2541,6 +2542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveJson: {fileID: 0}
+  allStars: {fileID: 0}
 --- !u!114 &1456913433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2565,6 +2567,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b5a26eb6faa7342845655e558bc99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  healthDisplay: {fileID: 0}
+  dead: 0
 --- !u!1 &7667767699941656935
 GameObject:
   m_ObjectHideFlags: 0

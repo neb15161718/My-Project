@@ -194,10 +194,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1456913422, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
     - target: {fileID: 1456913428, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: starDisplay
       value: 
@@ -218,10 +214,6 @@ PrefabInstance:
       propertyPath: saveButton
       value: 
       objectReference: {fileID: 488447922}
-    - target: {fileID: 1456913432, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
-      propertyPath: stars
-      value: 
-      objectReference: {fileID: 1466063732}
     - target: {fileID: 1456913432, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: allStars
       value: 
