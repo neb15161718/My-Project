@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
 
 public class SaveGame : MonoBehaviour
 {
-    public static SaveGame Instance;
-    Collectibles collectibles;
-    public TextAsset saveJson;
     public GameObject allStars;
+    public static int number;
 
     void Start()
     {
-        Instance = this;
-        collectibles = GetComponent<Collectibles>();
+
     }
 
     void Update()
@@ -25,25 +23,24 @@ public class SaveGame : MonoBehaviour
 
     public void Save()
     {
-        File.WriteAllText(Application.persistentDataPath + "/Save.json", string.Join(",", collectibles.starList));
+        File.WriteAllText(Application.persistentDataPath + "/" + number + ".json", string.Join(",", Collectibles.starList));
     }
 
     public void Load()
     {
-        collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/Save.json")).Split(",");
-        collectibles.stars = 0;
-        Transform[] starList = allStars.gameObject.GetComponentsInChildren<Transform>(true);
-        foreach(Transform stars in starList)
+        if (System.IO.File.Exists(Application.persistentDataPath + "/" + number + ".json"))
         {
-            if (stars.gameObject.name != ("Stars"))
+            Collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/" + number + ".json")).Split(",");
+            Collectibles.stars = 0;
+            foreach (string star in Collectibles.starList)
             {
-                stars.gameObject.SetActive(true);
-                if (collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
+                if (star == "1")
                 {
-                    stars.gameObject.SetActive(false);
-                    collectibles.stars = collectibles.stars + 1;
+                    Collectibles.stars = Collectibles.stars + 1;
                 }
             }
+            SceneManager.LoadScene("HubWorld");
+            Time.timeScale = 1;
         }
     }
 }

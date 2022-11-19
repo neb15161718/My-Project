@@ -2277,9 +2277,7 @@ GameObject:
   - component: {fileID: 1456913423}
   - component: {fileID: 1456913421}
   - component: {fileID: 1456913424}
-  - component: {fileID: 1456913428}
   - component: {fileID: 1456913430}
-  - component: {fileID: 1456913432}
   - component: {fileID: 1456913433}
   - component: {fileID: 1914321830}
   m_Layer: 0
@@ -2497,21 +2495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175736994ab6ee345be056e872dca3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1456913428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7647134206250791342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f6b5f7082d85e645a6b436938a31cf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stars: 0
-  starDisplay: {fileID: 0}
-  starList: []
 --- !u!114 &1456913430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2529,20 +2512,6 @@ MonoBehaviour:
   saveButton: {fileID: 0}
   loadButton: {fileID: 0}
   hubButton: {fileID: 0}
---- !u!114 &1456913432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7647134206250791342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaaef3bfeedc6e94bb0185276b219b14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveJson: {fileID: 0}
-  allStars: {fileID: 0}
 --- !u!114 &1456913433
 MonoBehaviour:
   m_ObjectHideFlags: 0
