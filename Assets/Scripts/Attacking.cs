@@ -42,9 +42,11 @@ public class Attacking : MonoBehaviour
                 if (enemy.touchingPlayer == true)
                 {
                     enemy.health = enemy.health - 1;
+                    enemy.TakeDamage();
                     if (enemy.health == 0)
                     {
                         enemy.Die();
+                        StarManager.Instance.EnemyDied(int.Parse(enemy.name.Substring(enemy.name.Length - 2)));
                     }
                 }
             }
@@ -76,7 +78,7 @@ public class Attacking : MonoBehaviour
     {
         StartCoroutine(Died());
     }
-    
+
     IEnumerator Died()
     {
         dead = true;
@@ -84,5 +86,10 @@ public class Attacking : MonoBehaviour
         animator.SetBool("Moving", false);
         yield return new WaitForSeconds(3);
         Time.timeScale = 0;
+    }
+
+    public void TakeDamage()
+    {
+        animator.SetTrigger("Damage");
     }
 }

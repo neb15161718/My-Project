@@ -8,12 +8,12 @@ public class PlainPlainsLoad : MonoBehaviour
 
     void Start()
     {
-        Transform[] starList = allStars.gameObject.GetComponentsInChildren<Transform>(true);
-        foreach (Transform stars in starList)
+        Star[] starList = allStars.gameObject.GetComponentsInChildren<Star>(true);
+        foreach (Star stars in starList)
         {
-            if (stars.gameObject.name != ("Stars"))
+            stars.gameObject.SetActive(true);
+            if (Collectibles.starList != null)
             {
-                stars.gameObject.SetActive(true);
                 if (Collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
                 {
                     stars.gameObject.SetActive(false);
@@ -21,6 +21,7 @@ public class PlainPlainsLoad : MonoBehaviour
             }
         }
     }
+
 
     void Update()
     {

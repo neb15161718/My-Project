@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Vector3 difference = target - new Vector3(transform.position.x, 0, transform.position.z);
             float diff = difference.sqrMagnitude;
-            if (diff < 50)
+            if (diff < 100)
             {
                 transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
@@ -69,6 +69,7 @@ public class Enemy : MonoBehaviour
             if (touchingPlayer == true)
             {
                 Attacking.Instance.health = Attacking.Instance.health - 1;
+                Attacking.Instance.TakeDamage();
                 if (Attacking.Instance.health == 0)
                 {
                     Attacking.Instance.Die();
@@ -90,5 +91,10 @@ public class Enemy : MonoBehaviour
         animator.SetBool("Moving", false);
         yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
+    }
+
+    public void TakeDamage()
+    {
+        animator.SetTrigger("Damage");
     }
 }

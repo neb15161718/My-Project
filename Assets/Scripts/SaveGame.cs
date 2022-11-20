@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class SaveGame : MonoBehaviour
 {
-    public GameObject allStars;
     public static int number;
 
     void Start()
