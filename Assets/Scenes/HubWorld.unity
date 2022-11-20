@@ -210,6 +210,10 @@ PrefabInstance:
       propertyPath: saveButton
       value: 
       objectReference: {fileID: 488447922}
+    - target: {fileID: 1667239368, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 6354849532290933038}
     - target: {fileID: 1914321830, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: healthDisplay
       value: 
@@ -790,9 +794,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6354849531869989976, guid: 563b471a2714625409af055d1ab037ff, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 563b471a2714625409af055d1ab037ff, type: 3}
+--- !u!1 &6354849532290933038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6354849531869989980, guid: 563b471a2714625409af055d1ab037ff, type: 3}
+  m_PrefabInstance: {fileID: 6354849532290933037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9094624715896178446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -892,6 +902,10 @@ PrefabInstance:
     - target: {fileID: 9094624715823491436, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094624715823491436, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9094624716247259324, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
