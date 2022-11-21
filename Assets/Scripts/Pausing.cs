@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Pausing : MonoBehaviour
@@ -12,13 +13,14 @@ public class Pausing : MonoBehaviour
     public Button saveButton;
     public Button loadButton;
     public Button hubButton;
-
+    Scene currentScene;
     void Start()
     {
         pauseText.enabled = false;
         saveButton.gameObject.SetActive(false);
         loadButton.gameObject.SetActive(false);
         hubButton.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -33,9 +35,17 @@ public class Pausing : MonoBehaviour
             Time.timeScale = 0;
             paused = true;
             pauseText.enabled = true;
-            saveButton.gameObject.SetActive(true);
-            loadButton.gameObject.SetActive(true);
-            hubButton.gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            currentScene = SceneManager.GetActiveScene();
+            if (currentScene.name == "HubWorld")
+            {
+                saveButton.gameObject.SetActive(true);
+                loadButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                hubButton.gameObject.SetActive(true);
+            }
         }
         else
         {   
@@ -45,6 +55,7 @@ public class Pausing : MonoBehaviour
             saveButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             hubButton.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

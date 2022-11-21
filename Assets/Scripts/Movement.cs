@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Movement : MonoBehaviour
     bool isGrounded = true;
     float jumpDirection = 0;
     Pausing pausing;
+    public new GameObject camera;
 
     void Start()
     {
@@ -36,6 +38,9 @@ public class Movement : MonoBehaviour
         {
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
             Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
+            movementVector = camera.transform.TransformDirection(movementVector);
+            movementVector = new Vector3(movementVector.x, 0, movementVector.z);
+
             if (inputVector != Vector2.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(movementVector);
@@ -47,11 +52,11 @@ public class Movement : MonoBehaviour
             }
             if (isGrounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
             {
-                characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 100f, ForceMode.Force);
+                characterRigidbody.AddForce (movementVector.normalized * 100f, ForceMode.Force);
             }
             else
             {
-                characterRigidbody.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * 250f, ForceMode.Force);
+                characterRigidbody.AddForce(movementVector.normalized * 250f, ForceMode.Force);
             }
             float tempY = characterRigidbody.velocity.y;
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
