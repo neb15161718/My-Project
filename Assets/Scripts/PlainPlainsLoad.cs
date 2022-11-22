@@ -20,6 +20,10 @@ public class PlainPlainsLoad : MonoBehaviour
                 }
             }
         }
+        if (Collectibles.starList == null)
+        {
+            Collectibles.starList = new string[] { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+        }
     }
 
 
