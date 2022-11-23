@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     public int health;
     public bool touchingPlayer;
     bool dead;
+    IEnumerator attackCoroutine;
+    bool attacking;
+    bool hit;
 
     void Start()
     {
@@ -17,6 +20,9 @@ public class Enemy : MonoBehaviour
         health = 3;
         touchingPlayer = false;
         dead = false;
+        attackCoroutine = Attack();
+        attacking = false;
+        hit = false;
     }
 
     void FixedUpdate()
@@ -48,7 +54,11 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             touchingPlayer = true;
-            StartCoroutine(Attack());
+            if (attacking == false)
+            {
+                StartCoroutine(attackCoroutine);
+                attacking = true;
+            }
         }
     }
 
@@ -57,19 +67,28 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             touchingPlayer = false;
+            attacking = false;
         }
     }
 
     IEnumerator Attack()
     {
+        if (hit == true)
+        {
+            yield return new WaitForSeconds(3);
+            hit = false;
+        }
         while (dead == false & touchingPlayer == true)
         {
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(1.1f);
             if (touchingPlayer == true)
             {
-                Attacking.Instance.health = Attacking.Instance.health - 1;
-                Attacking.Instance.TakeDamage();
+                if (Attacking.Instance.health != 0)
+                {
+                    Attacking.Instance.health = Attacking.Instance.health - 1;
+                    Attacking.Instance.TakeDamage();
+                }
                 if (Attacking.Instance.health == 0)
                 {
                     Attacking.Instance.Die();
@@ -96,5 +115,11 @@ public class Enemy : MonoBehaviour
     public void TakeDamage()
     {
         animator.SetTrigger("Damage");
+        StopCoroutine(attackCoroutine);
+        attackCoroutine = null;
+        attackCoroutine = Attack();
+        hit = true;
+        attacking = true;
+        StartCoroutine(attackCoroutine);
     }
 }

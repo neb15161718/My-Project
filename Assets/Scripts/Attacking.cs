@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class Attacking : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Attacking : MonoBehaviour
     GameObject closest;
     public bool dead;
     Rigidbody characterRigidBody;
+    public TextMeshProUGUI deadText;
+    public Button hubButton;
 
     void Start()
     {
@@ -24,6 +27,7 @@ public class Attacking : MonoBehaviour
         closest = null;
         dead = false;
         characterRigidBody = GetComponent<Rigidbody>();
+        deadText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -85,6 +89,9 @@ public class Attacking : MonoBehaviour
         animator.SetTrigger("Die");
         animator.SetBool("Moving", false);
         yield return new WaitForSeconds(3);
+        deadText.gameObject.SetActive(true);
+        hubButton.gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
     }
 

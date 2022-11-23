@@ -30,7 +30,7 @@ public class Pausing : MonoBehaviour
         
     public void Pause(InputAction.CallbackContext context)
     {
-        if (paused == false)
+        if (paused == false & Attacking.Instance.dead == false)
         {
             Time.timeScale = 0;
             paused = true;
@@ -47,7 +47,7 @@ public class Pausing : MonoBehaviour
                 hubButton.gameObject.SetActive(true);
             }
         }
-        else
+        else if (Attacking.Instance.dead == false)
         {   
             Time.timeScale = 1;
             paused = false;
