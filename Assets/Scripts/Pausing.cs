@@ -14,6 +14,7 @@ public class Pausing : MonoBehaviour
     public Button loadButton;
     public Button hubButton;
     Scene currentScene;
+
     void Start()
     {
         pauseText.enabled = false;
