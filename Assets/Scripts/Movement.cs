@@ -20,8 +20,6 @@ public class Movement : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
-        collider.material.dynamicFriction = 3;
-        collider.material.staticFriction = 3;
         characterRigidbody = GetComponent<Rigidbody>();
         playerInputActions = new Actions();
         playerInputActions.Player.Enable();
@@ -74,16 +72,6 @@ public class Movement : MonoBehaviour
                 animator.SetBool("Moving", false);
             }
         }
-        if (isGrounded == false)
-        {
-            collider.material.dynamicFriction = 0;
-            collider.material.staticFriction = 0;
-        }
-        if (isGrounded == true)
-        {
-            collider.material.dynamicFriction = 3;
-            collider.material.staticFriction = 3;
-        }
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -97,7 +85,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Terrain")
+        if (collision.gameObject.tag == "Terrain")
         {
             isGrounded = true;
             animator.SetBool("Grounded", true);
@@ -107,7 +95,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.name == "Terrain")
+        if (collision.gameObject.tag == "Terrain")
         {
             isGrounded = false;
             animator.SetBool("Grounded", false);
