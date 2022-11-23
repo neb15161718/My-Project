@@ -16,6 +16,18 @@ public class PlainPlainsLoad : MonoBehaviour
             {
                 if (Collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
                 {
+                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) == 0)
+                    {
+                        Pausing.Instance.objectiveText1.text += "-\u2713";
+                    }
+                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) == 1)
+                    {
+                        Pausing.Instance.objectiveText2.text += "-Done";
+                    }
+                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) == 2)
+                    {
+                        Pausing.Instance.objectiveText3.text += "-Done";
+                    }
                     stars.gameObject.SetActive(false);
                 }
             }

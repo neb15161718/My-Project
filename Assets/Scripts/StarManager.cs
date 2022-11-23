@@ -39,7 +39,7 @@ public class StarManager : MonoBehaviour
         {
             if (count == 3)
             {
-                if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 0)
+                if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 0 & Collectibles.starList[0] == "0")
                 {
                     stars.gameObject.SetActive(true);
                 }

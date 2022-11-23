@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                characterRigidbody.AddForce(movementVector.normalized * 250f, ForceMode.Force);
+                characterRigidbody.AddForce(movementVector.normalized * 300f, ForceMode.Force);
             }
             float tempY = characterRigidbody.velocity.y;
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
@@ -78,7 +78,7 @@ public class Movement : MonoBehaviour
     {
         if (context.performed & isGrounded == true & pausing.paused == false & Attacking.Instance.dead == false)
         {
-           characterRigidbody.AddForce(Vector3.up * 18f, ForceMode.Impulse);
+           characterRigidbody.AddForce(Vector3.up * 25f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);
         }
     }
