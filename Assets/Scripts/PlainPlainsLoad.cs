@@ -16,15 +16,15 @@ public class PlainPlainsLoad : MonoBehaviour
             {
                 if (Collectibles.starList[int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))] == "1")
                 {
-                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) == 0)
+                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) % 3 == 0)
                     {
                         Pausing.Instance.objectiveText1.SetText("\u2713 " + Pausing.Instance.objectiveText1.text);
                     }
-                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) == 1)
+                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) % 3 == 1)
                     {
-                        Pausing.Instance.objectiveText2.SetText("\u2713 " + Pausing.Instance.objectiveText3.text);
+                        Pausing.Instance.objectiveText2.SetText("\u2713 " + Pausing.Instance.objectiveText2.text);
                     }
-                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) == 2)
+                    if (int.Parse((stars.gameObject.name.Substring(stars.gameObject.name.Length - 2))) % 3 == 2)
                     {
                         Pausing.Instance.objectiveText3.SetText("\u2713 " + Pausing.Instance.objectiveText3.text);
                     }

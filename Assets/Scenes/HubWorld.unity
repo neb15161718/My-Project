@@ -152,6 +152,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 488447922}
     - target: {fileID: 1456913430, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
+      propertyPath: starButton
+      value: 
+      objectReference: {fileID: 9094624715896178451}
+    - target: {fileID: 1456913430, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: objectiveText
       value: 
       objectReference: {fileID: 9094624715896178448}
@@ -750,7 +754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.018141448
+      value: -0.018141456
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
@@ -758,7 +762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000011175871
+      value: 0.000000007450581
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1016,5 +1020,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9094624715896178451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1509468832, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
+  m_PrefabInstance: {fileID: 9094624715896178446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

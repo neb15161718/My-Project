@@ -13,18 +13,20 @@ public class Pausing : MonoBehaviour
     public Button saveButton;
     public Button loadButton;
     public Button hubButton;
+    public Button starButton;
     public TextMeshProUGUI objectiveText1;
     public TextMeshProUGUI objectiveText2;
     public TextMeshProUGUI objectiveText3;
     Scene currentScene;
     public static Pausing Instance;
 
-    void Start()
+    void Awake()
     {
         pauseText.enabled = false;
         saveButton.gameObject.SetActive(false);
         loadButton.gameObject.SetActive(false);
         hubButton.gameObject.SetActive(false);
+        starButton.gameObject.SetActive(false);
         objectiveText1.enabled = false;
         objectiveText2.enabled = false;
         objectiveText3.enabled = false;
@@ -54,9 +56,7 @@ public class Pausing : MonoBehaviour
             else
             {
                 hubButton.gameObject.SetActive(true);
-                objectiveText1.enabled = true;
-                objectiveText2.enabled = true;
-                objectiveText3.enabled = true;
+                starButton.gameObject.SetActive(true);
             }
         }
         else if (Attacking.Instance.dead == false)
@@ -67,10 +67,21 @@ public class Pausing : MonoBehaviour
             saveButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             hubButton.gameObject.SetActive(false);
+            starButton.gameObject.SetActive(false);
             objectiveText1.enabled = false;
             objectiveText2.enabled = false;
             objectiveText3.enabled = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    public void DisplayStars()
+    {
+        pauseText.enabled = false;
+        hubButton.gameObject.SetActive(false);
+        starButton.gameObject.SetActive(false);
+        objectiveText1.enabled = true;
+        objectiveText2.enabled = true;
+        objectiveText3.enabled = true;
     }
 }
