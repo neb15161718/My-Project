@@ -903,10 +903,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 636721480, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
-      propertyPath: m_text
-      value: 3 - Jump
-      objectReference: {fileID: 0}
     - target: {fileID: 1509468832, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2065,11 +2061,15 @@ PrefabInstance:
       objectReference: {fileID: 62788837}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000019273836
+      value: 0.000000019270857
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000000371584
+      value: -0.0000000037152657
+      objectReference: {fileID: 0}
+    - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.018189482
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y

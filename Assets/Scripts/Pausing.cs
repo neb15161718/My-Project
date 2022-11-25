@@ -20,14 +20,6 @@ public class Pausing : MonoBehaviour
 
     void Awake()
     {
-        pauseText.enabled = false;
-        saveButton.gameObject.SetActive(false);
-        loadButton.gameObject.SetActive(false);
-        hubButton.gameObject.SetActive(false);
-        starButton.gameObject.SetActive(false);
-        objectiveText1.enabled = false;
-        objectiveText2.enabled = false;
-        objectiveText3.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         Instance = this;
     }
