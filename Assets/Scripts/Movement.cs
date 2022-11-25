@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
@@ -54,13 +51,13 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                characterRigidbody.AddForce(movementVector.normalized * 300f, ForceMode.Force);
+                characterRigidbody.AddForce(movementVector.normalized * 250f, ForceMode.Force);
             }
             float tempY = characterRigidbody.velocity.y;
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
             if (characterRigidbody.velocity.magnitude > 8f)
             {
-                characterRigidbody.velocity = characterRigidbody.velocity.normalized * 6f;
+                characterRigidbody.velocity = characterRigidbody.velocity.normalized * 8f;
             }
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, tempY, characterRigidbody.velocity.z);
             if (inputVector.x != 0 || inputVector.y != 0)
