@@ -22,6 +22,8 @@ public class MainMenu : MonoBehaviour
     bool copying;
     bool renaming;
     int copyingFile;
+    int fileNumber;
+    string fileName;
 
     void Start()
     {
@@ -106,6 +108,21 @@ public class MainMenu : MonoBehaviour
             copying = false;
         }
     }
+    
+    public void renameFile()
+    {
+        if (inputField.text != "")
+        {
+            button.GetComponentInChildren<TextMeshProUGUI>().text = inputField.text;
+            names[fileNumber - 1] = inputField.text;
+            File.WriteAllText(Application.persistentDataPath + "/names.json", string.Join(",", names));
+        }
+        else
+        {
+            button.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
+        }
+        renaming = false;
+    }
 
     public void Settings()
     {
@@ -116,6 +133,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadFile(int number)
     {
+        fileNumber = number;
         if (number == 1)
         {
             button = file1Button;
@@ -147,9 +165,11 @@ public class MainMenu : MonoBehaviour
             else if (deleting == true)
             {
                 File.Delete(Application.persistentDataPath + "/" + number + ".json");
+                deleting = false;
             }
             else if (renaming == true)
             {
+                fileName = button.GetComponentInChildren<TextMeshProUGUI>().text;
                 inputField.gameObject.SetActive(true);
                 inputField.transform.position = button.transform.position;
                 inputField.textComponent = button.GetComponentInChildren<TextMeshProUGUI>();
@@ -176,6 +196,8 @@ public class MainMenu : MonoBehaviour
             else
             {
                 File.WriteAllText(Application.persistentDataPath + "/" + number + ".json", File.ReadAllText(Application.persistentDataPath + "/" + copyingFile + ".json"));
+                copyingFile = 0;
+                copying = false;
             }
         }
     }
