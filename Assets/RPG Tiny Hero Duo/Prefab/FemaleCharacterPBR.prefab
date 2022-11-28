@@ -2478,6 +2478,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: efb41e0c-858c-4dfa-a507-b93a07a1ca61
     m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1456913424}
+        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+        m_MethodName: Sprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1d733e59-d154-4741-bff4-5c032fa3f9a6
+    m_ActionName: Player/Sprint[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
@@ -2513,7 +2529,10 @@ MonoBehaviour:
   saveButton: {fileID: 0}
   loadButton: {fileID: 0}
   hubButton: {fileID: 0}
-  objectiveText: {fileID: 0}
+  starButton: {fileID: 0}
+  objectiveText1: {fileID: 0}
+  objectiveText2: {fileID: 0}
+  objectiveText3: {fileID: 0}
 --- !u!114 &1456913433
 MonoBehaviour:
   m_ObjectHideFlags: 0

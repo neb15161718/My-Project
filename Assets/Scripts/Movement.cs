@@ -8,9 +8,11 @@ public class Movement : MonoBehaviour
     Animator animator;
     GameObject player;
     new Collider collider;
-    bool isGrounded = true;
-    float jumpDirection = 0;
+    bool grounded;
+    bool sprinting;
+    float jumpDirection;
     Pausing pausing;
+    Attacking attacking;
     public new GameObject camera;
 
     void Start()
@@ -21,6 +23,10 @@ public class Movement : MonoBehaviour
         playerInputActions = new Actions();
         playerInputActions.Player.Enable();
         pausing = GetComponent<Pausing>();
+        attacking = GetComponent<Attacking>();
+        grounded = true;
+        sprinting = false;
+        jumpDirection = 0;
     }
 
     void FixedUpdate()
@@ -29,7 +35,7 @@ public class Movement : MonoBehaviour
         {
             return;
         }
-        if (Attacking.Instance.dead == false)
+        if (attacking.dead == false)
         {
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
             Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
@@ -45,7 +51,7 @@ public class Movement : MonoBehaviour
                     characterRigidbody.MoveRotation(targetRotation);
                 }
             }
-            if (isGrounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
+            if (grounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
             {
                 characterRigidbody.AddForce (movementVector.normalized * 100f, ForceMode.Force);
             }
@@ -55,9 +61,19 @@ public class Movement : MonoBehaviour
             }
             float tempY = characterRigidbody.velocity.y;
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
-            if (characterRigidbody.velocity.magnitude > 8f)
+            if (sprinting == true)
             {
-                characterRigidbody.velocity = characterRigidbody.velocity.normalized * 8f;
+                if (characterRigidbody.velocity.magnitude > 12f)
+                {
+                    characterRigidbody.velocity = characterRigidbody.velocity.normalized * 12f;
+                }
+            }
+            else
+            {
+                if (characterRigidbody.velocity.magnitude > 8f)
+                {
+                    characterRigidbody.velocity = characterRigidbody.velocity.normalized * 8f;
+                }
             }
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, tempY, characterRigidbody.velocity.z);
             if (inputVector.x != 0 || inputVector.y != 0)
@@ -73,10 +89,24 @@ public class Movement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed & isGrounded == true & pausing.paused == false & Attacking.Instance.dead == false)
+        if (context.performed & grounded == true & pausing.paused == false & attacking.dead == false)
         {
            characterRigidbody.AddForce(Vector3.up * 25f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);
+        }
+    }
+
+    public void Sprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            sprinting = true;
+            animator.SetBool("Sprinting", true);
+        }
+        else if (context.canceled)
+        {
+            sprinting = false;
+            animator.SetBool("Sprinting", false);
         }
     }
 
@@ -84,7 +114,7 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Terrain")
         {
-            isGrounded = true;
+            grounded = true;
             animator.SetBool("Grounded", true);
             animator.SetBool("Jumping", false);
         }
@@ -94,10 +124,22 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Terrain")
         {
-            isGrounded = false;
+            grounded = false;
             animator.SetBool("Grounded", false);
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
             jumpDirection = transform.eulerAngles.y;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Death Plane")
+        {
+            attacking.dead = true;
+            attacking.deadText.gameObject.SetActive(true);
+            attacking.hubButton.gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
         }
     }
 }

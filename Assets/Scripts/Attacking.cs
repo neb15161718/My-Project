@@ -17,6 +17,7 @@ public class Attacking : MonoBehaviour
     Rigidbody characterRigidBody;
     public TextMeshProUGUI deadText;
     public Button hubButton;
+    Pausing pausing;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class Attacking : MonoBehaviour
         dead = false;
         characterRigidBody = GetComponent<Rigidbody>();
         deadText.gameObject.SetActive(false);
+        pausing = GetComponent<Pausing>();
     }
 
     void Update()
@@ -36,7 +38,7 @@ public class Attacking : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.performed & dead == false)
+        if (context.performed & pausing.paused == false & dead == false)
         {
             animator.SetTrigger("Attack");
             foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))

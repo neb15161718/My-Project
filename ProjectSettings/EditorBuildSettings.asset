@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlainPlains.unity
     guid: 74780037b1b11a5429485e9954a98db6
+  - enabled: 1
+    path: Assets/Scenes/CloudyClouds.unity
+    guid: 671ca069ed863fc47b84641a0810afed
   m_configObjects: {}
