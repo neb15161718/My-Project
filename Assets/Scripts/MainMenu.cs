@@ -109,7 +109,7 @@ public class MainMenu : MonoBehaviour
         }
     }
     
-    public void renameFile()
+    public void RenameFile()
     {
         if (inputField.text != "")
         {
