@@ -17,6 +17,7 @@ public class Pausing : MonoBehaviour
     public TextMeshProUGUI objectiveText3;
     Scene currentScene;
     public static Pausing Instance;
+    Attacking attacking;
 
     void Awake()
     {
@@ -31,11 +32,11 @@ public class Pausing : MonoBehaviour
         
     public void Pause(InputAction.CallbackContext context)
     {
-        if (paused == false & Attacking.Instance.dead == false)
+        if (!paused & !attacking.dead)
         {
             Time.timeScale = 0;
             paused = true;
-            pauseText.enabled = true;
+            pauseText.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             currentScene = SceneManager.GetActiveScene();
             if (currentScene.name == "HubWorld")
@@ -49,18 +50,18 @@ public class Pausing : MonoBehaviour
                 starButton.gameObject.SetActive(true);
             }
         }
-        else if (Attacking.Instance.dead == false)
+        else if (!attacking.dead)
         {   
             Time.timeScale = 1;
             paused = false;
-            pauseText.enabled = false;
+            pauseText.gameObject.SetActive(false);
             saveButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             hubButton.gameObject.SetActive(false);
             starButton.gameObject.SetActive(false);
-            objectiveText1.enabled = false;
-            objectiveText2.enabled = false;
-            objectiveText3.enabled = false;
+            objectiveText1.gameObject.SetActive(false);
+            objectiveText2.gameObject.SetActive(false);
+            objectiveText3.gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
@@ -70,8 +71,8 @@ public class Pausing : MonoBehaviour
         pauseText.enabled = false;
         hubButton.gameObject.SetActive(false);
         starButton.gameObject.SetActive(false);
-        objectiveText1.enabled = true;
-        objectiveText2.enabled = true;
-        objectiveText3.enabled = true;
+        objectiveText1.gameObject.SetActive(true);
+        objectiveText2.gameObject.SetActive(true);
+        objectiveText3.gameObject.SetActive(true);
     }
 }

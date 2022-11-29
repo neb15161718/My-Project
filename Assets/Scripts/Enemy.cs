@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (touchingPlayer == false & dead == false)
+        if (!touchingPlayer & !dead)
         {
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Vector3 difference = target - new Vector3(transform.position.x, 0, transform.position.z);
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(3);
             hit = false;
         }
-        while (dead == false & touchingPlayer == true)
+        while (!dead & touchingPlayer)
         {
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(1.1f);

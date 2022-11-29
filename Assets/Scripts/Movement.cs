@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour
         {
             return;
         }
-        if (attacking.dead == false)
+        if (!attacking.dead)
         {
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
             Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
@@ -51,7 +51,7 @@ public class Movement : MonoBehaviour
                     characterRigidbody.MoveRotation(targetRotation);
                 }
             }
-            if (grounded == false & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
+            if (!grounded & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
             {
                 characterRigidbody.AddForce (movementVector.normalized * 100f, ForceMode.Force);
             }
@@ -61,7 +61,7 @@ public class Movement : MonoBehaviour
             }
             float tempY = characterRigidbody.velocity.y;
             characterRigidbody.velocity = new Vector3(characterRigidbody.velocity.x, 0, characterRigidbody.velocity.z);
-            if (sprinting == true)
+            if (sprinting)
             {
                 if (characterRigidbody.velocity.magnitude > 12f)
                 {
@@ -89,7 +89,7 @@ public class Movement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed & grounded == true & pausing.paused == false & attacking.dead == false)
+        if (context.performed & grounded & !pausing.paused & !attacking.dead)
         {
            characterRigidbody.AddForce(Vector3.up * 25f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);

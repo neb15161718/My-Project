@@ -38,7 +38,7 @@ public class Attacking : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.performed & pausing.paused == false & dead == false)
+        if (context.performed & !pausing.paused & !dead)
         {
             animator.SetTrigger("Attack");
             foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))

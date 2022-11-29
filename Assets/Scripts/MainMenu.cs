@@ -7,6 +7,7 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     public TextMeshProUGUI mainMenuText;
+    public TextMeshProUGUI confirmText;
     public Button playButton;
     public Button settingsButton;
     public Button file1Button;
@@ -15,6 +16,11 @@ public class MainMenu : MonoBehaviour
     public Button deleteFileButton;
     public Button copyFileButton;
     public Button renameFileButton;
+    public Button yesButton;
+    public Button noButton;
+    TextMeshProUGUI deleteText;
+    TextMeshProUGUI copyText;
+    TextMeshProUGUI renameText;
     Button button;
     public TMP_InputField inputField;
     string[] names;
@@ -31,6 +37,9 @@ public class MainMenu : MonoBehaviour
         copying = false;
         renaming = false;
         copyingFile = 0;
+        deleteText = deleteFileButton.GetComponentInChildren<TextMeshProUGUI>();
+        copyText = copyFileButton.GetComponentInChildren<TextMeshProUGUI>();
+        renameText = renameFileButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void Update()
@@ -69,59 +78,102 @@ public class MainMenu : MonoBehaviour
 
     public void Delete()
     {
-        if (deleting == true)
+        if (deleting)
         {
             deleting = false;
+            deleteText.text = "Delete";
         }
         else
         {
             deleting = true;
             copying = false;
             renaming = false;
+            deleteText.text = "Deleting";
         }
     }
 
     public void Copy()
     {
-        if (copying == true)
+        if (copying)
         {
             copying = false;
+            copyText.text = "Copy";
         }
         else
         {
             copying = true;
             deleting = false;
             renaming = false;
+            copyText.text = "Copying";
         }
     }
 
     public void Rename()
     {
-        if (renaming == true)
+        if (renaming)
         {
             renaming = false;
+            renameText.text = "Rename";
         }
         else
         {
             renaming = true;
             deleting = false;
             copying = false;
+            renameText.text = "Renaming";
         }
+    }
+
+    public void Yes()
+    {
+        if (deleting)
+        {
+            File.Delete(Application.persistentDataPath + "/" + fileNumber + ".json");
+            deleting = false;
+            deleteText.text = "Delete";
+        }
+        else if (copying)
+        {
+            File.WriteAllText(Application.persistentDataPath + "/" + fileNumber + ".json", File.ReadAllText(Application.persistentDataPath + "/" + copyingFile + ".json"));
+            copyingFile = 0;
+            copying = false;
+            copyText.text = "Copy";
+        }
+        else if (renaming)
+        {
+            button.GetComponentInChildren<TextMeshProUGUI>().text = inputField.text;
+            names[fileNumber - 1] = inputField.text;
+            File.WriteAllText(Application.persistentDataPath + "/names.json", string.Join(",", names));
+            renaming = false;
+            renameText.text = "Rename";
+        }
+    }
+
+    public void No()
+    {
+
     }
     
     public void RenameFile()
     {
         if (inputField.text != "")
         {
-            button.GetComponentInChildren<TextMeshProUGUI>().text = inputField.text;
-            names[fileNumber - 1] = inputField.text;
-            File.WriteAllText(Application.persistentDataPath + "/names.json", string.Join(",", names));
+            file1Button.gameObject.SetActive(false);
+            file2Button.gameObject.SetActive(false);
+            file3Button.gameObject.SetActive(false);
+            deleteFileButton.gameObject.SetActive(false);
+            copyFileButton.gameObject.SetActive(false);
+            renameFileButton.gameObject.SetActive(false);
+            confirmText.gameObject.SetActive(true);
+            yesButton.gameObject.SetActive(true);
+            noButton.gameObject.SetActive(true);
         }
         else
         {
             button.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
+            renaming = false;
+            renameText.text = "Rename";
         }
-        renaming = false;
     }
 
     public void Settings()
@@ -148,7 +200,7 @@ public class MainMenu : MonoBehaviour
         }
         if (File.Exists(Application.persistentDataPath + "/" + number + ".json"))
         {
-            if (deleting == false & copying == false & renaming == false)
+            if (!deleting & !copying & !renaming)
             {
                 SaveGame.number = number;
                 Collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/" + number + ".json")).Split(",");
@@ -162,12 +214,19 @@ public class MainMenu : MonoBehaviour
                 }
                 SceneManager.LoadScene("HubWorld");
             }
-            else if (deleting == true)
+            else if (deleting)
             {
-                File.Delete(Application.persistentDataPath + "/" + number + ".json");
-                deleting = false;
+                file1Button.gameObject.SetActive(false);
+                file2Button.gameObject.SetActive(false);
+                file3Button.gameObject.SetActive(false);
+                deleteFileButton.gameObject.SetActive(false);
+                copyFileButton.gameObject.SetActive(false);
+                renameFileButton.gameObject.SetActive(false);
+                confirmText.gameObject.SetActive(true);
+                yesButton.gameObject.SetActive(true);
+                noButton.gameObject.SetActive(true);
             }
-            else if (renaming == true)
+            else if (renaming)
             {
                 fileName = button.GetComponentInChildren<TextMeshProUGUI>().text;
                 inputField.gameObject.SetActive(true);
@@ -177,7 +236,7 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            if (deleting == false & copying == false & renaming == false)
+            if (!deleting & !copying & !renaming)
             {
                 Collectibles.starList = new string[] { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
                 File.WriteAllText(Application.persistentDataPath + "/" + number + ".json", string.Join(",", Collectibles.starList));
@@ -188,16 +247,22 @@ public class MainMenu : MonoBehaviour
         {
             if (copyingFile == 0)
             {
-                if (File.Exists(Application.persistentDataPath + "/" + number + ".json"))
+                if (File.Exists(Application.persistentDataPath + "/" + fileNumber + ".json"))
                 {
-                    copyingFile = number;
+                    copyingFile = fileNumber;
                 }
             }
             else
             {
-                File.WriteAllText(Application.persistentDataPath + "/" + number + ".json", File.ReadAllText(Application.persistentDataPath + "/" + copyingFile + ".json"));
-                copyingFile = 0;
-                copying = false;
+                file1Button.gameObject.SetActive(false);
+                file2Button.gameObject.SetActive(false);
+                file3Button.gameObject.SetActive(false);
+                deleteFileButton.gameObject.SetActive(false);
+                copyFileButton.gameObject.SetActive(false);
+                renameFileButton.gameObject.SetActive(false);
+                confirmText.gameObject.SetActive(true);
+                yesButton.gameObject.SetActive(true);
+                noButton.gameObject.SetActive(true);
             }
         }
     }
