@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.InputSystem.Utilities;
 
 public class MainMenu : MonoBehaviour
 {
@@ -22,9 +23,17 @@ public class MainMenu : MonoBehaviour
     public Button noButton;
     public Button backButton;
     public Button rebindButton;
+    public Button rebindMoveButton;
+    public Button rebindJumpButton;
+    public Button rebindSprintButton;
+    public Button rebindAttackButton;
     TextMeshProUGUI deleteText;
     TextMeshProUGUI copyText;
     TextMeshProUGUI renameText;
+    TextMeshProUGUI rebindMoveText;
+    TextMeshProUGUI rebindJumpText;
+    TextMeshProUGUI rebindSprintText;
+    TextMeshProUGUI rebindAttackText;
     Button button;
     public TMP_InputField inputField;
     public TMP_Dropdown settingsDropdown;
@@ -36,10 +45,15 @@ public class MainMenu : MonoBehaviour
     int copyingFile;
     int fileNumber;
     string fileName;
-    public static Actions playerInputActions;
+    public Actions playerInputActions;
+    InputActionRebindingExtensions.RebindingOperation rebinding;
+    public InputActionReference moveReference;
+    public InputActionReference jumpReference;
+    public static MainMenu Instance;
 
     void Start()
     {
+        Instance = this;
         deleting = false;
         copying = false;
         renaming = false;
@@ -47,16 +61,15 @@ public class MainMenu : MonoBehaviour
         deleteText = deleteFileButton.GetComponentInChildren<TextMeshProUGUI>();
         copyText = copyFileButton.GetComponentInChildren<TextMeshProUGUI>();
         renameText = renameFileButton.GetComponentInChildren<TextMeshProUGUI>();
+        rebindMoveText = rebindMoveButton.GetComponentInChildren<TextMeshProUGUI>();
+        rebindJumpText = rebindJumpButton.GetComponentInChildren<TextMeshProUGUI>();
+        rebindSprintText = rebindSprintButton.GetComponentInChildren<TextMeshProUGUI>();
+        rebindAttackText = rebindAttackButton.GetComponentInChildren<TextMeshProUGUI>();
         int graphics = PlayerPrefs.GetInt("Graphics");
         settingsDropdown.value = graphics;
         QualitySettings.SetQualityLevel(graphics);
         QualitySettings.renderPipeline = qualityLevels[graphics];
         playerInputActions = new Actions();
-    }
-
-    void Update()
-    {
-        print(playerInputActions.Player.Jump);
     }
 
     public void Play()
@@ -148,6 +161,8 @@ public class MainMenu : MonoBehaviour
         backButton.gameObject.SetActive(false);
         settingsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
+        rebindMoveButton.gameObject.SetActive(false);
+        rebindJumpButton.gameObject.SetActive(false);
         mainMenuText.gameObject.SetActive(true);
         playButton.gameObject.SetActive(true);
         settingsButton.gameObject.SetActive(true);
@@ -241,9 +256,46 @@ public class MainMenu : MonoBehaviour
 
     public void Rebind()
     {
-        playerInputActions.Player.Jump.Disable();
-        playerInputActions.Player.Jump.PerformInteractiveRebinding().Start();
-        playerInputActions.Player.Jump.PerformInteractiveRebinding().Dispose();
+        settingsDropdown.gameObject.SetActive(false);
+        rebindButton.gameObject.SetActive(false);
+        rebindMoveText.text = playerInputActions.Player.Move.GetBindingDisplayString();
+        rebindJumpText.text = playerInputActions.Player.Jump.GetBindingDisplayString();
+        rebindMoveButton.gameObject.SetActive(true);
+        rebindJumpButton.gameObject.SetActive(true);
+    }
+
+    public void StartRebind(string action)
+    {
+        if (action == "Jump")
+        {
+            playerInputActions.Player.Jump.Disable();
+            rebinding = jumpReference.action.PerformInteractiveRebinding(1)
+                .OnComplete(operation => RebindComplete(action))
+                .Start();
+        }
+
+        if (action == "Move")
+        {
+            playerInputActions.Player.Move.Disable();
+            rebinding = moveReference.action.PerformInteractiveRebinding()
+                .WithTargetBinding(1)
+                .OnComplete(operation => RebindComplete(action))
+                .Start();
+        }
+    }
+
+    void RebindComplete(string action)
+    {
+        rebinding.Dispose();
+        if (action == "Jump")
+        {
+            rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
+        }
+
+        if (action == "Move")
+        {
+            rebindMoveText.text = moveReference.action.GetBindingDisplayString();
+        }
     }
 
     public void LoadFile(int number)

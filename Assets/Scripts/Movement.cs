@@ -21,25 +21,17 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
         characterRigidbody = GetComponent<Rigidbody>();
-        playerInputActions = MainMenu.playerInputActions;
+        playerInputActions = MainMenu.Instance.playerInputActions;
         playerInputActions.Player.Enable();
         pausing = GetComponent<Pausing>();
         attacking = GetComponent<Attacking>();
         grounded = true;
         sprinting = false;
         jumpDirection = 0;
-        playerInputActions.Player.Jump.AddBinding("Button", "<Keyboard>/g")
-            .WithInteraction("Press");
     }
 
     void FixedUpdate()
     {
-        print(playerInputActions.Player.Jump.GetBindingDisplayString());
-        print(playerInputActions.Player.Jump);
-        if (playerInputActions == null)
-        {
-            return;
-        }
         if (!attacking.dead)
         {
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
