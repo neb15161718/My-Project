@@ -2,6 +2,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class MainMenu : MonoBehaviour
@@ -18,11 +20,15 @@ public class MainMenu : MonoBehaviour
     public Button renameFileButton;
     public Button yesButton;
     public Button noButton;
+    public Button backButton;
+    public Button rebindButton;
     TextMeshProUGUI deleteText;
     TextMeshProUGUI copyText;
     TextMeshProUGUI renameText;
     Button button;
     public TMP_InputField inputField;
+    public TMP_Dropdown settingsDropdown;
+    public RenderPipelineAsset[] qualityLevels;
     string[] names;
     bool deleting;
     bool copying;
@@ -30,6 +36,7 @@ public class MainMenu : MonoBehaviour
     int copyingFile;
     int fileNumber;
     string fileName;
+    public static Actions playerInputActions;
 
     void Start()
     {
@@ -40,6 +47,16 @@ public class MainMenu : MonoBehaviour
         deleteText = deleteFileButton.GetComponentInChildren<TextMeshProUGUI>();
         copyText = copyFileButton.GetComponentInChildren<TextMeshProUGUI>();
         renameText = renameFileButton.GetComponentInChildren<TextMeshProUGUI>();
+        int graphics = PlayerPrefs.GetInt("Graphics");
+        settingsDropdown.value = graphics;
+        QualitySettings.SetQualityLevel(graphics);
+        QualitySettings.renderPipeline = qualityLevels[graphics];
+        playerInputActions = new Actions();
+    }
+
+    void Update()
+    {
+        print(playerInputActions.Player.Jump);
     }
 
     public void Play()
@@ -53,6 +70,7 @@ public class MainMenu : MonoBehaviour
         deleteFileButton.gameObject.SetActive(true);
         copyFileButton.gameObject.SetActive(true);
         renameFileButton.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
         if (File.Exists(Application.persistentDataPath + "/names.json"))
         {
             names = (File.ReadAllText(Application.persistentDataPath + "/names.json")).Split(",");
@@ -119,6 +137,22 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void Back()
+    {
+        file1Button.gameObject.SetActive(false);
+        file2Button.gameObject.SetActive(false);
+        file3Button.gameObject.SetActive(false);
+        deleteFileButton.gameObject.SetActive(false);
+        copyFileButton.gameObject.SetActive(false);
+        renameFileButton.gameObject.SetActive(false);
+        backButton.gameObject.SetActive(false);
+        settingsDropdown.gameObject.SetActive(false);
+        rebindButton.gameObject.SetActive(false);
+        mainMenuText.gameObject.SetActive(true);
+        playButton.gameObject.SetActive(true);
+        settingsButton.gameObject.SetActive(true);
+    }
+
     public void Yes()
     {
         if (deleting)
@@ -155,6 +189,7 @@ public class MainMenu : MonoBehaviour
         deleteFileButton.gameObject.SetActive(true);
         copyFileButton.gameObject.SetActive(true);
         renameFileButton.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
         deleting = false;
         copying = false;
         renaming = false;
@@ -174,6 +209,7 @@ public class MainMenu : MonoBehaviour
             deleteFileButton.gameObject.SetActive(false);
             copyFileButton.gameObject.SetActive(false);
             renameFileButton.gameObject.SetActive(false);
+            backButton.gameObject.SetActive(false);
             confirmText.gameObject.SetActive(true);
             yesButton.gameObject.SetActive(true);
             noButton.gameObject.SetActive(true);
@@ -191,6 +227,23 @@ public class MainMenu : MonoBehaviour
         mainMenuText.gameObject.SetActive(false);
         playButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
+        settingsDropdown.gameObject.SetActive(true);
+        rebindButton.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
+    }
+
+    public void ChangeGraphics()
+    {
+        PlayerPrefs.SetInt("Graphics", settingsDropdown.value);
+        QualitySettings.SetQualityLevel(settingsDropdown.value);
+        QualitySettings.renderPipeline = qualityLevels[settingsDropdown.value];
+    }
+
+    public void Rebind()
+    {
+        playerInputActions.Player.Jump.Disable();
+        playerInputActions.Player.Jump.PerformInteractiveRebinding().Start();
+        playerInputActions.Player.Jump.PerformInteractiveRebinding().Dispose();
     }
 
     public void LoadFile(int number)
@@ -232,6 +285,7 @@ public class MainMenu : MonoBehaviour
                 deleteFileButton.gameObject.SetActive(false);
                 copyFileButton.gameObject.SetActive(false);
                 renameFileButton.gameObject.SetActive(false);
+                backButton.gameObject.SetActive(false);
                 confirmText.gameObject.SetActive(true);
                 yesButton.gameObject.SetActive(true);
                 noButton.gameObject.SetActive(true);
@@ -270,6 +324,7 @@ public class MainMenu : MonoBehaviour
                 deleteFileButton.gameObject.SetActive(false);
                 copyFileButton.gameObject.SetActive(false);
                 renameFileButton.gameObject.SetActive(false);
+                backButton.gameObject.SetActive(false);
                 confirmText.gameObject.SetActive(true);
                 yesButton.gameObject.SetActive(true);
                 noButton.gameObject.SetActive(true);

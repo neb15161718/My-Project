@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Android;
 
 public class Movement : MonoBehaviour
 {
@@ -20,17 +21,21 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
         characterRigidbody = GetComponent<Rigidbody>();
-        playerInputActions = new Actions();
+        playerInputActions = MainMenu.playerInputActions;
         playerInputActions.Player.Enable();
         pausing = GetComponent<Pausing>();
         attacking = GetComponent<Attacking>();
         grounded = true;
         sprinting = false;
         jumpDirection = 0;
+        playerInputActions.Player.Jump.AddBinding("Button", "<Keyboard>/g")
+            .WithInteraction("Press");
     }
 
     void FixedUpdate()
     {
+        print(playerInputActions.Player.Jump.GetBindingDisplayString());
+        print(playerInputActions.Player.Jump);
         if (playerInputActions == null)
         {
             return;

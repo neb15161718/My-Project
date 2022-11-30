@@ -43,12 +43,11 @@ public class StarManager : MonoBehaviour
         {
             if (diamondCount == 5)
             {
-                if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 3 & Collectibles.starList[0] == "0")
+                if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 3 & Collectibles.starList[3] == "0")
                 {
                     stars.gameObject.SetActive(true);
                 }
             }
         }
-        print(diamondCount);
     }
 }
