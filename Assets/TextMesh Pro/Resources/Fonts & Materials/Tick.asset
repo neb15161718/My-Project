@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Tick
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 2992533
   material: {fileID: 6666019235334092955}
-  materialHashCode: 0
+  materialHashCode: 468238869
   m_Version: 1.1.0
   m_SourceFontFileGUID: c9fba64733279334e80db4a830d3192d
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: c9fba64733279334e80db4a830d3192d, type: 3}
@@ -122,7 +122,7 @@ MonoBehaviour:
     atlasHeight: 512
     characterSetSelectionMode: 6
     characterSequence: 2713
-    referencedFontAssetGUID: 
+    referencedFontAssetGUID: e8c31c16dda516747847a6d6b8e856ea
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
@@ -167,7 +167,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - OUTLINE_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -226,7 +227,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 1
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 1

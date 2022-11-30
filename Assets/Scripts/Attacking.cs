@@ -9,10 +9,9 @@ public class Attacking : MonoBehaviour
     Animator animator;
     public int health;
     public TextMeshProUGUI healthDisplay;
-    Actions playerInputActions;
     Enemy enemy;
     public static Attacking Instance;
-    GameObject closest;
+    Enemy closest;
     public bool dead;
     Rigidbody characterRigidBody;
     public TextMeshProUGUI deadText;
@@ -41,7 +40,8 @@ public class Attacking : MonoBehaviour
         if (context.performed & !pausing.paused & !dead)
         {
             animator.SetTrigger("Attack");
-            foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))
+            Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(true);
+            foreach (Enemy enemies in enemyList)
             {
                 enemy = enemies.GetComponent<Enemy>();
                 if (enemy.touchingPlayer == true)
@@ -63,14 +63,16 @@ public class Attacking : MonoBehaviour
         }
     }
 
-    GameObject FindClosestEnemy()
+    Enemy FindClosestEnemy()
     {
-        foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))
+        closest = null;
+        Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(true);
+        foreach (Enemy enemies in enemyList)
         {
             float distance = Mathf.Infinity;
             Vector3 difference = new Vector3(enemies.transform.position.x, 0, enemies.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z);
             float diff = difference.sqrMagnitude;
-            if (diff < distance & diff < 10)
+            if (diff < distance & diff < 10 & enemies.dead == false)
             {
                 closest = enemies;
                 distance = diff;

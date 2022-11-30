@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     Animator animator;
     public int health;
     public bool touchingPlayer;
-    bool dead;
+    public bool dead;
     IEnumerator attackCoroutine;
     bool attacking;
     bool hit;
@@ -48,9 +48,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = true;
             if (attacking == false)
@@ -61,9 +61,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision other)
+    void OnCollisionExit(Collision collision)
     {
-        if (other.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = false;
             attacking = false;

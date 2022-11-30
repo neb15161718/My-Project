@@ -23,13 +23,9 @@ public class Pausing : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Instance = this;
+        attacking = GetComponent<Attacking>();
     }
-
-    void Update()
-    {
-
-    }
-        
+ 
     public void Pause(InputAction.CallbackContext context)
     {
         if (!paused & !attacking.dead)

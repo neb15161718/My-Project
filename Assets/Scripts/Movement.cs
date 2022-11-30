@@ -112,7 +112,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Terrain")
+        if (collision.gameObject.CompareTag("Terrain"))
         {
             grounded = true;
             animator.SetBool("Grounded", true);
@@ -122,7 +122,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Terrain")
+        if (collision.gameObject.CompareTag("Terrain"))
         {
             grounded = false;
             animator.SetBool("Grounded", false);

@@ -3,16 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class HubButton : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void ToHub()
     {
         SceneManager.LoadScene("HubWorld");

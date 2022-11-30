@@ -42,11 +42,6 @@ public class MainMenu : MonoBehaviour
         renameText = renameFileButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    void Update()
-    {
-
-    }
-
     public void Play()
     {
         mainMenuText.gameObject.SetActive(false);
@@ -151,7 +146,22 @@ public class MainMenu : MonoBehaviour
 
     public void No()
     {
-
+        confirmText.gameObject.SetActive(false);
+        yesButton.gameObject.SetActive(false);
+        noButton.gameObject.SetActive(false);
+        file1Button.gameObject.SetActive(true);
+        file2Button.gameObject.SetActive(true);
+        file3Button.gameObject.SetActive(true);
+        deleteFileButton.gameObject.SetActive(true);
+        copyFileButton.gameObject.SetActive(true);
+        renameFileButton.gameObject.SetActive(true);
+        deleting = false;
+        copying = false;
+        renaming = false;
+        deleteText.text = "Delete";
+        copyText.text = "Copy";
+        renameText.text = "Rename";
+        copyingFile = 0;
     }
     
     public void RenameFile()

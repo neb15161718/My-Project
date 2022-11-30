@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlainPlainsLoad : MonoBehaviour
+public class CloudyCloudsLoad : MonoBehaviour
 {
     void Start()
     {
         Star[] starList = StarManager.Instance.allStars.gameObject.GetComponentsInChildren<Star>(true);
         foreach (Star stars in starList)
         {
-            if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 0)
+            if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 3)
             {
                 stars.gameObject.SetActive(false);
             }

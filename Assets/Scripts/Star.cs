@@ -2,17 +2,6 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-
-    }
-
     void OnTriggerEnter(Collider other)
     {   
         if (other.CompareTag("Player"))

@@ -6,16 +6,6 @@ public class SaveGame : MonoBehaviour
 {
     public static int number;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Save()
     {
         File.WriteAllText(Application.persistentDataPath + "/" + number + ".json", string.Join(",", Collectibles.starList));
