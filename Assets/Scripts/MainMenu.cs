@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.InputSystem.Utilities;
 
 public class MainMenu : MonoBehaviour
 {
@@ -23,14 +22,12 @@ public class MainMenu : MonoBehaviour
     public Button noButton;
     public Button backButton;
     public Button rebindButton;
-    public Button rebindMoveButton;
     public Button rebindJumpButton;
     public Button rebindSprintButton;
     public Button rebindAttackButton;
     TextMeshProUGUI deleteText;
     TextMeshProUGUI copyText;
     TextMeshProUGUI renameText;
-    TextMeshProUGUI rebindMoveText;
     TextMeshProUGUI rebindJumpText;
     TextMeshProUGUI rebindSprintText;
     TextMeshProUGUI rebindAttackText;
@@ -47,8 +44,10 @@ public class MainMenu : MonoBehaviour
     string fileName;
     public Actions playerInputActions;
     InputActionRebindingExtensions.RebindingOperation rebinding;
-    public InputActionReference moveReference;
     public InputActionReference jumpReference;
+    public InputActionReference sprintReference;
+    public InputActionReference attackReference;
+    InputAction move;
     public static MainMenu Instance;
 
     void Start()
@@ -61,7 +60,6 @@ public class MainMenu : MonoBehaviour
         deleteText = deleteFileButton.GetComponentInChildren<TextMeshProUGUI>();
         copyText = copyFileButton.GetComponentInChildren<TextMeshProUGUI>();
         renameText = renameFileButton.GetComponentInChildren<TextMeshProUGUI>();
-        rebindMoveText = rebindMoveButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindJumpText = rebindJumpButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindSprintText = rebindSprintButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindAttackText = rebindAttackButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -70,6 +68,7 @@ public class MainMenu : MonoBehaviour
         QualitySettings.SetQualityLevel(graphics);
         QualitySettings.renderPipeline = qualityLevels[graphics];
         playerInputActions = new Actions();
+        move = playerInputActions.Player.Move;
     }
 
     public void Play()
@@ -161,8 +160,9 @@ public class MainMenu : MonoBehaviour
         backButton.gameObject.SetActive(false);
         settingsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
-        rebindMoveButton.gameObject.SetActive(false);
         rebindJumpButton.gameObject.SetActive(false);
+        rebindSprintButton.gameObject.SetActive(false);
+        rebindAttackButton.gameObject.SetActive(false);
         mainMenuText.gameObject.SetActive(true);
         playButton.gameObject.SetActive(true);
         settingsButton.gameObject.SetActive(true);
@@ -258,27 +258,40 @@ public class MainMenu : MonoBehaviour
     {
         settingsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
-        rebindMoveText.text = playerInputActions.Player.Move.GetBindingDisplayString();
-        rebindJumpText.text = playerInputActions.Player.Jump.GetBindingDisplayString();
-        rebindMoveButton.gameObject.SetActive(true);
+        rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
         rebindJumpButton.gameObject.SetActive(true);
+        rebindSprintText.text = sprintReference.action.GetBindingDisplayString();
+        rebindSprintButton.gameObject.SetActive(true);
+        rebindAttackText.text = attackReference.action.GetBindingDisplayString();
+        rebindAttackButton.gameObject.SetActive(true);
     }
 
     public void StartRebind(string action)
     {
         if (action == "Jump")
         {
-            playerInputActions.Player.Jump.Disable();
             rebinding = jumpReference.action.PerformInteractiveRebinding(1)
+                .WithControlsExcluding("Mouse")
+                .WithControlsExcluding("<keyboard>/escape")
+                .WithControlsExcluding("<keyboard>/anyKey")
                 .OnComplete(operation => RebindComplete(action))
                 .Start();
         }
-
-        if (action == "Move")
+        if (action == "Sprint")
         {
-            playerInputActions.Player.Move.Disable();
-            rebinding = moveReference.action.PerformInteractiveRebinding()
-                .WithTargetBinding(1)
+            rebinding = sprintReference.action.PerformInteractiveRebinding(1)
+                .WithControlsExcluding("Mouse")
+                .WithControlsExcluding("<keyboard>/escape")
+                .WithControlsExcluding("<keyboard>/anyKey")
+                .OnComplete(operation => RebindComplete(action))
+                .Start();
+        }
+        if (action == "Attack")
+        {
+            rebinding = attackReference.action.PerformInteractiveRebinding(1)
+                .WithControlsExcluding("Mouse")
+                .WithControlsExcluding("<keyboard>/escape")
+                .WithControlsExcluding("<keyboard>/anyKey")
                 .OnComplete(operation => RebindComplete(action))
                 .Start();
         }
@@ -287,15 +300,9 @@ public class MainMenu : MonoBehaviour
     void RebindComplete(string action)
     {
         rebinding.Dispose();
-        if (action == "Jump")
-        {
-            rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
-        }
-
-        if (action == "Move")
-        {
-            rebindMoveText.text = moveReference.action.GetBindingDisplayString();
-        }
+        rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
+        rebindSprintText.text = sprintReference.action.GetBindingDisplayString();
+        rebindAttackText.text = attackReference.action.GetBindingDisplayString();
     }
 
     public void LoadFile(int number)
