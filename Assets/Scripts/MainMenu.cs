@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 
 public class MainMenu : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class MainMenu : MonoBehaviour
     public Button rebindJumpButton;
     public Button rebindSprintButton;
     public Button rebindAttackButton;
+    public Button saveRebindButton;
+    public Button loadRebindButton;
+    public Button rebind1Button;
+    public Button rebind2Button;
+    public Button rebind3Button;
     TextMeshProUGUI deleteText;
     TextMeshProUGUI copyText;
     TextMeshProUGUI renameText;
@@ -39,15 +45,17 @@ public class MainMenu : MonoBehaviour
     bool deleting;
     bool copying;
     bool renaming;
+    bool savingRebind;
+    bool loadingRebind;
     int copyingFile;
     int fileNumber;
     string fileName;
+    public PlayerInput playerInput;
     public Actions playerInputActions;
     InputActionRebindingExtensions.RebindingOperation rebinding;
     public InputActionReference jumpReference;
     public InputActionReference sprintReference;
     public InputActionReference attackReference;
-    InputAction move;
     public static MainMenu Instance;
 
     void Start()
@@ -56,6 +64,8 @@ public class MainMenu : MonoBehaviour
         deleting = false;
         copying = false;
         renaming = false;
+        savingRebind = false;
+        loadingRebind = false;
         copyingFile = 0;
         deleteText = deleteFileButton.GetComponentInChildren<TextMeshProUGUI>();
         copyText = copyFileButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -67,8 +77,9 @@ public class MainMenu : MonoBehaviour
         settingsDropdown.value = graphics;
         QualitySettings.SetQualityLevel(graphics);
         QualitySettings.renderPipeline = qualityLevels[graphics];
+        int defaultControls = PlayerPrefs.GetInt("DefaultControls");
+        playerInput.actions.LoadBindingOverridesFromJson(PlayerPrefs.GetString("Rebinds" + defaultControls));
         playerInputActions = new Actions();
-        move = playerInputActions.Player.Move;
     }
 
     public void Play()
@@ -163,9 +174,23 @@ public class MainMenu : MonoBehaviour
         rebindJumpButton.gameObject.SetActive(false);
         rebindSprintButton.gameObject.SetActive(false);
         rebindAttackButton.gameObject.SetActive(false);
+        saveRebindButton.gameObject.SetActive(false);
+        loadRebindButton.gameObject.SetActive(false);
+        rebind1Button.gameObject.SetActive(false);
+        rebind2Button.gameObject.SetActive(false);
+        rebind3Button.gameObject.SetActive(false);
         mainMenuText.gameObject.SetActive(true);
         playButton.gameObject.SetActive(true);
         settingsButton.gameObject.SetActive(true);
+        deleting = false;
+        copying = false;
+        renaming = false;
+        savingRebind = false;
+        loadingRebind = false;
+        deleteText.text = "Delete";
+        copyText.text = "Copy";
+        renameText.text = "Rename";
+        copyingFile = 0;
     }
 
     public void Yes()
@@ -264,6 +289,8 @@ public class MainMenu : MonoBehaviour
         rebindSprintButton.gameObject.SetActive(true);
         rebindAttackText.text = attackReference.action.GetBindingDisplayString();
         rebindAttackButton.gameObject.SetActive(true);
+        saveRebindButton.gameObject.SetActive(true);
+        loadRebindButton.gameObject.SetActive(true);
     }
 
     public void StartRebind(string action)
@@ -305,27 +332,70 @@ public class MainMenu : MonoBehaviour
         rebindAttackText.text = attackReference.action.GetBindingDisplayString();
     }
 
-    public void LoadFile(int number)
+    public void SaveRebind()
     {
-        fileNumber = number;
-        if (number == 1)
+        savingRebind = true;
+        rebindJumpButton.gameObject.SetActive(false);
+        rebindSprintButton.gameObject.SetActive(false);
+        rebindAttackButton.gameObject.SetActive(false);
+        saveRebindButton.gameObject.SetActive(false);
+        loadRebindButton.gameObject.SetActive(false);
+        rebind1Button.gameObject.SetActive(true);
+        rebind2Button.gameObject.SetActive(true);
+        rebind3Button.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
+    }
+    public void LoadRebind()
+    {
+        loadingRebind = true;
+        rebindJumpButton.gameObject.SetActive(false);
+        rebindSprintButton.gameObject.SetActive(false);
+        rebindAttackButton.gameObject.SetActive(false);
+        saveRebindButton.gameObject.SetActive(false);
+        loadRebindButton.gameObject.SetActive(false);
+        rebind1Button.gameObject.SetActive(true);
+        rebind2Button.gameObject.SetActive(true);
+        rebind3Button.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
+    }
+
+    public void SaveRebindFile(int file)
+    {
+        if (savingRebind)
+        {
+            PlayerPrefs.SetString("Rebinds" + file, playerInput.actions.SaveBindingOverridesAsJson());
+            PlayerPrefs.SetInt("DefaultControls", file);
+            savingRebind = false;
+        }
+        else if (loadingRebind)
+        {
+            playerInput.actions.LoadBindingOverridesFromJson(PlayerPrefs.GetString("Rebinds" + file));
+            PlayerPrefs.SetInt("DefaultControls", file);
+            savingRebind = false;
+        }
+    }
+
+    public void LoadFile(int file)
+    {
+        fileNumber = file;
+        if (file == 1)
         {
             button = file1Button;
         }
-        else if (number == 2)
+        else if (file == 2)
         {
             button = file2Button;
         }
-        else if (number == 3)
+        else if (file == 3)
         {
             button = file3Button;
         }
-        if (File.Exists(Application.persistentDataPath + "/" + number + ".json"))
+        if (File.Exists(Application.persistentDataPath + "/" + file + ".json"))
         {
             if (!deleting & !copying & !renaming)
             {
-                SaveGame.number = number;
-                Collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/" + number + ".json")).Split(",");
+                SaveGame.file = file;
+                Collectibles.starList = (File.ReadAllText(Application.persistentDataPath + "/" + file + ".json")).Split(",");
                 Collectibles.stars = 0;
                 foreach (string star in Collectibles.starList)
                 {
@@ -362,7 +432,7 @@ public class MainMenu : MonoBehaviour
             if (!deleting & !copying & !renaming)
             {
                 Collectibles.starList = new string[] { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
-                File.WriteAllText(Application.persistentDataPath + "/" + number + ".json", string.Join(",", Collectibles.starList));
+                File.WriteAllText(Application.persistentDataPath + "/" + file + ".json", string.Join(",", Collectibles.starList));
                 SceneManager.LoadScene("HubWorld");
             }
         }
