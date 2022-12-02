@@ -72,7 +72,7 @@ public class Attacking : MonoBehaviour
             float distance = Mathf.Infinity;
             Vector3 difference = new Vector3(enemies.transform.position.x, 0, enemies.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z);
             float diff = difference.sqrMagnitude;
-            if (diff < distance & diff < 10 & enemies.dead == false)
+            if (diff < distance & diff < 10 & !enemies.dead)
             {
                 closest = enemies;
                 distance = diff;
