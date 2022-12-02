@@ -13,10 +13,8 @@ public class Attacking : MonoBehaviour
     public static Attacking Instance;
     Enemy closest;
     public bool dead;
-    Rigidbody characterRigidBody;
     public TextMeshProUGUI deadText;
     public Button hubButton;
-    Pausing pausing;
 
     void Start()
     {
@@ -25,9 +23,7 @@ public class Attacking : MonoBehaviour
         Instance = this;
         closest = null;
         dead = false;
-        characterRigidBody = GetComponent<Rigidbody>();
         deadText.gameObject.SetActive(false);
-        pausing = GetComponent<Pausing>();
     }
 
     void Update()
@@ -37,7 +33,7 @@ public class Attacking : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.performed & !pausing.paused & !dead)
+        if (context.performed & !Pausing.Instance.paused & !dead)
         {
             animator.SetTrigger("Attack");
             Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(true);

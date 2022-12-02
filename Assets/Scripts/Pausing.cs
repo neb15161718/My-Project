@@ -6,7 +6,7 @@ using TMPro;
 
 public class Pausing : MonoBehaviour
 {
-    public bool paused = false;
+    public bool paused;
     public TextMeshProUGUI pauseText;
     public Button saveButton;
     public Button loadButton;
@@ -21,8 +21,13 @@ public class Pausing : MonoBehaviour
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         Instance = this;
+    }
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        paused = false;
         attacking = GetComponent<Attacking>();
     }
  

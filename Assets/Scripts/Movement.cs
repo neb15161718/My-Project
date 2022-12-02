@@ -4,26 +4,29 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     Rigidbody characterRigidbody;
+    PlayerInput playerInput;
     Actions playerInputActions;
     Animator animator;
-    GameObject player;
-    new Collider collider;
     bool grounded;
     bool sprinting;
     float jumpDirection;
-    Pausing pausing;
-    Attacking attacking;
     public new GameObject camera;
 
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
+        playerInput.SwitchCurrentActionMap("Player");
         animator = GetComponent<Animator>();
-        collider = GetComponent<Collider>();
         characterRigidbody = GetComponent<Rigidbody>();
-        playerInputActions = MainMenu.Instance.playerInputActions;
+        if (MainMenu.playerInputActions != null)
+        {
+            playerInputActions = MainMenu.playerInputActions;
+        }
+        else
+        {
+            playerInputActions = new Actions();
+        }
         playerInputActions.Player.Enable();
-        pausing = GetComponent<Pausing>();
-        attacking = GetComponent<Attacking>();
         grounded = true;
         sprinting = false;
         jumpDirection = 0;
@@ -31,7 +34,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!attacking.dead)
+        if (!Attacking.Instance.dead)
         {
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
             Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
@@ -80,12 +83,22 @@ public class Movement : MonoBehaviour
             {
                 animator.SetBool("Moving", false);
             }
+            grounded = (Physics.Raycast((new Vector3(transform.position.x, transform.position.y, transform.position.z)), Vector3.down, 0.1f, 1 << LayerMask.NameToLayer("Terrain")));
+            animator.SetBool("Grounded", grounded);
+            if (grounded)
+            {
+                animator.SetBool("Jumping", false);
+            }
+            else
+            {
+                jumpDirection = transform.eulerAngles.y;
+            }
         }
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed & grounded & !pausing.paused & !attacking.dead)
+        if (context.performed & grounded & !Pausing.Instance.paused & !Attacking.Instance.dead)
         {
            characterRigidbody.AddForce(Vector3.up * 25f, ForceMode.Impulse);
             animator.SetBool("Jumping", true);
@@ -110,7 +123,7 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Terrain"))
         {
-            grounded = true;
+            //grounded = true;
             animator.SetBool("Grounded", true);
             animator.SetBool("Jumping", false);
         }
@@ -120,20 +133,20 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Terrain"))
         {
-            grounded = false;
+            //grounded = false;
             animator.SetBool("Grounded", false);
             Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
             jumpDirection = transform.eulerAngles.y;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Death Plane")
         {
-            attacking.dead = true;
-            attacking.deadText.gameObject.SetActive(true);
-            attacking.hubButton.gameObject.SetActive(true);
+            Attacking.Instance.dead = true;
+            Attacking.Instance.deadText.gameObject.SetActive(true);
+            Attacking.Instance.hubButton.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
         }

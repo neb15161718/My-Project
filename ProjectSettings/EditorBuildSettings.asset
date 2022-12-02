@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CloudyClouds.unity
     guid: 671ca069ed863fc47b84641a0810afed
+  - enabled: 1
+    path: Assets/Scenes/FutureFacility.unity
+    guid: 788773a0d81309e4f88f908f8035bd64
   m_configObjects: {}

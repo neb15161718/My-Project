@@ -50,8 +50,8 @@ public class MainMenu : MonoBehaviour
     int fileNumber;
     string fileName;
     public PlayerInput playerInput;
-    public Actions playerInputActions;
-    InputActionRebindingExtensions.RebindingOperation rebinding;
+    public static Actions playerInputActions;
+    InputActionRebindingExtensions.RebindingOperation rebindingOperation;
     public InputActionReference jumpReference;
     public InputActionReference sprintReference;
     public InputActionReference attackReference;
@@ -280,6 +280,7 @@ public class MainMenu : MonoBehaviour
 
     public void Rebind()
     {
+        playerInput.enabled = false;
         settingsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
         rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
@@ -294,38 +295,76 @@ public class MainMenu : MonoBehaviour
 
     public void StartRebind(string action)
     {
-        if (action == "Jump")
+        playerInput.enabled = true;
+        if (playerInput.currentControlScheme == "Gamepad")
         {
-            rebinding = jumpReference.action.PerformInteractiveRebinding(1)
-                .WithControlsExcluding("Mouse")
-                .WithControlsExcluding("<keyboard>/escape")
-                .WithControlsExcluding("<keyboard>/anyKey")
-                .OnComplete(operation => RebindComplete(action))
-                .Start();
+            if (action == "Jump")
+            {
+                rebindingOperation = jumpReference.action.PerformInteractiveRebinding(0)
+                    .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("Keyboard")
+                    .WithCancelingThrough("<Gamepad>/start")
+                    .OnComplete(operation => RebindComplete())
+                    .Start();
+            }
+            if (action == "Sprint")
+            {
+                rebindingOperation = sprintReference.action.PerformInteractiveRebinding(0)
+                    .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("Keyboard")
+                    .WithCancelingThrough("<Gamepad>/start")
+                    .OnComplete(operation => RebindComplete())
+                    .Start();
+            }
+            if (action == "Attack")
+            {
+                rebindingOperation = attackReference.action.PerformInteractiveRebinding(0)
+                    .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("Keyboard")
+                    .WithCancelingThrough("<Gamepad>/start")
+                    .OnComplete(operation => RebindComplete())
+                    .Start();
+            }
         }
-        if (action == "Sprint")
+        else if (playerInput.currentControlScheme == "Keyboard&Mouse")
         {
-            rebinding = sprintReference.action.PerformInteractiveRebinding(1)
-                .WithControlsExcluding("Mouse")
-                .WithControlsExcluding("<keyboard>/escape")
-                .WithControlsExcluding("<keyboard>/anyKey")
-                .OnComplete(operation => RebindComplete(action))
-                .Start();
-        }
-        if (action == "Attack")
-        {
-            rebinding = attackReference.action.PerformInteractiveRebinding(1)
-                .WithControlsExcluding("Mouse")
-                .WithControlsExcluding("<keyboard>/escape")
-                .WithControlsExcluding("<keyboard>/anyKey")
-                .OnComplete(operation => RebindComplete(action))
-                .Start();
+            if (action == "Jump")
+            {
+                rebindingOperation = jumpReference.action.PerformInteractiveRebinding(1)
+                    .WithControlsExcluding("Gamepad")
+                    .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("<Keyboard>/anyKey")
+                    .WithCancelingThrough("<Keyboard>/escape")
+                    .OnComplete(operation => RebindComplete())
+                    .Start();
+            }
+            else if (action == "Sprint")
+            {
+                rebindingOperation = sprintReference.action.PerformInteractiveRebinding(1)
+                    .WithControlsExcluding("Gamepad")
+                    .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("<Keyboard>/anyKey")
+                    .WithCancelingThrough("<Keyboard>/escape")
+                    .OnComplete(operation => RebindComplete())
+                    .Start();
+            }
+            else if (action == "Attack")
+            {
+                rebindingOperation = attackReference.action.PerformInteractiveRebinding(1)
+                    .WithControlsExcluding("Gamepad")
+                    .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("<Keyboard>/anyKey")
+                    .WithCancelingThrough("<Keyboard>/escape")
+                    .OnComplete(operation => RebindComplete())
+                    .Start();
+            }
         }
     }
 
-    void RebindComplete(string action)
+    void RebindComplete()
     {
-        rebinding.Dispose();
+        playerInput.enabled = false;
+        rebindingOperation.Dispose();
         rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
         rebindSprintText.text = sprintReference.action.GetBindingDisplayString();
         rebindAttackText.text = attackReference.action.GetBindingDisplayString();
