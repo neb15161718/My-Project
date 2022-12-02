@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = true;
-            if (attacking == false)
+            if (!attacking)
             {
                 StartCoroutine(attackCoroutine);
                 attacking = true;
@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Attack()
     {
-        if (hit == true)
+        if (hit)
         {
             yield return new WaitForSeconds(3);
             hit = false;
@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
         {
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(1.1f);
-            if (touchingPlayer == true)
+            if (touchingPlayer)
             {
                 if (Attacking.Instance.health != 0)
                 {

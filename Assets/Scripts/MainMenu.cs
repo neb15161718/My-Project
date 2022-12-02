@@ -435,7 +435,7 @@ public class MainMenu : MonoBehaviour
                 SceneManager.LoadScene("HubWorld");
             }
         }
-        if (copying == true)
+        if (copying)
         {
             if (copyingFile == 0)
             {

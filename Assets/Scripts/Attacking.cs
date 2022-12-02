@@ -44,7 +44,7 @@ public class Attacking : MonoBehaviour
             foreach (Enemy enemies in enemyList)
             {
                 enemy = enemies.GetComponent<Enemy>();
-                if (enemy.touchingPlayer == true)
+                if (enemy.touchingPlayer)
                 {
                     enemy.health = enemy.health - 1;
                     enemy.TakeDamage();
