@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        health = 3;
+        health = Mathf.CeilToInt(5 * Attacking.enemyHealthMultiplier);
         touchingPlayer = false;
         dead = false;
         attackCoroutine = Attack();
@@ -83,12 +83,12 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(1.1f);
             if (touchingPlayer)
             {
-                if (Attacking.Instance.health != 0)
+                if (Attacking.Instance.health > 0)
                 {
                     Attacking.Instance.health = Attacking.Instance.health - 1;
                     Attacking.Instance.TakeDamage();
                 }
-                if (Attacking.Instance.health == 0)
+                if (Attacking.Instance.health <= 0)
                 {
                     Attacking.Instance.Die();
                 }

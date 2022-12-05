@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
 
 public class Attacking : MonoBehaviour
 {
@@ -15,15 +15,25 @@ public class Attacking : MonoBehaviour
     public bool dead;
     public TextMeshProUGUI deadText;
     public Button hubButton;
+    public static float healthMultiplier;
+    public static float enemyHealthMultiplier;
+
+    void Awake()
+    {
+        Instance = this;
+        if (MainMenu.playerInputActions == null)
+        {
+            healthMultiplier = 1;
+            enemyHealthMultiplier = 1;
+        }
+    }
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        health = 5;
-        Instance = this;
+        health = Mathf.CeilToInt(5 * healthMultiplier);
         closest = null;
         dead = false;
-        deadText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -44,7 +54,7 @@ public class Attacking : MonoBehaviour
                 {
                     enemy.health = enemy.health - 1;
                     enemy.TakeDamage();
-                    if (enemy.health == 0)
+                    if (enemy.health <= 0)
                     {
                         enemy.Die();
                         StarManager.Instance.EnemyDied(int.Parse(enemy.name.Substring(enemy.name.Length - 2)));

@@ -38,7 +38,8 @@ public class MainMenu : MonoBehaviour
     TextMeshProUGUI rebindAttackText;
     Button button;
     public TMP_InputField inputField;
-    public TMP_Dropdown settingsDropdown;
+    public TMP_Dropdown graphicsDropdown;
+    public TMP_Dropdown difficultyDropdown;
     public RenderPipelineAsset[] qualityLevels;
     string[] names;
     bool deleting;
@@ -72,10 +73,43 @@ public class MainMenu : MonoBehaviour
         rebindJumpText = rebindJumpButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindSprintText = rebindSprintButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindAttackText = rebindAttackButton.GetComponentInChildren<TextMeshProUGUI>();
-        int graphics = PlayerPrefs.GetInt("Graphics");
-        settingsDropdown.value = graphics;
+        int graphics;
+        int difficulty;
+        if (PlayerPrefs.HasKey("Graphics"))
+        {
+            graphics = PlayerPrefs.GetInt("Graphics");
+        }
+        else
+        {
+            graphics = 2;
+        }
+        graphicsDropdown.value = graphics;
         QualitySettings.SetQualityLevel(graphics);
         QualitySettings.renderPipeline = qualityLevels[graphics];
+        if (PlayerPrefs.HasKey("Difficulty"))
+        {
+            difficulty = PlayerPrefs.GetInt("Difficulty");
+        }
+        else
+        {
+            difficulty = 1;
+        }
+        difficultyDropdown.value = difficulty;
+        if (difficulty == 0)
+        {
+            Attacking.healthMultiplier = 2;
+            Attacking.enemyHealthMultiplier = 0.5f;
+        }
+        else if (difficulty == 1)
+        {
+            Attacking.healthMultiplier = 1;
+            Attacking.enemyHealthMultiplier = 1;
+        }
+        else if (difficulty == 2)
+        {
+            Attacking.healthMultiplier = 0.5f;
+            Attacking.enemyHealthMultiplier = 2;
+        }
         int defaultControls = PlayerPrefs.GetInt("DefaultControls");
         playerInput.actions.LoadBindingOverridesFromJson(PlayerPrefs.GetString("Rebinds" + defaultControls));
         playerInputActions = new Actions();
@@ -168,7 +202,8 @@ public class MainMenu : MonoBehaviour
         copyFileButton.gameObject.SetActive(false);
         renameFileButton.gameObject.SetActive(false);
         backButton.gameObject.SetActive(false);
-        settingsDropdown.gameObject.SetActive(false);
+        graphicsDropdown.gameObject.SetActive(false);
+        difficultyDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
         rebindJumpButton.gameObject.SetActive(false);
         rebindSprintButton.gameObject.SetActive(false);
@@ -266,22 +301,43 @@ public class MainMenu : MonoBehaviour
         mainMenuText.gameObject.SetActive(false);
         playButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
-        settingsDropdown.gameObject.SetActive(true);
+        graphicsDropdown.gameObject.SetActive(true);
+        difficultyDropdown.gameObject.SetActive(true);
         rebindButton.gameObject.SetActive(true);
         backButton.gameObject.SetActive(true);
     }
 
     public void ChangeGraphics()
     {
-        PlayerPrefs.SetInt("Graphics", settingsDropdown.value);
-        QualitySettings.SetQualityLevel(settingsDropdown.value);
-        QualitySettings.renderPipeline = qualityLevels[settingsDropdown.value];
+        PlayerPrefs.SetInt("Graphics", graphicsDropdown.value);
+        QualitySettings.SetQualityLevel(graphicsDropdown.value);
+        QualitySettings.renderPipeline = qualityLevels[graphicsDropdown.value]; 
+    }
+
+    public void ChangeDifficulty()
+    {
+        PlayerPrefs.SetInt("Difficulty", difficultyDropdown.value);
+        if (difficultyDropdown.value == 0)
+        {
+            Attacking.healthMultiplier = 2;
+            Attacking.enemyHealthMultiplier = 0.5f;
+        }
+        else if (difficultyDropdown.value == 1)
+        {
+            Attacking.healthMultiplier = 1;
+            Attacking.enemyHealthMultiplier = 1;
+        }
+        else if (difficultyDropdown.value == 2)
+        {
+            Attacking.healthMultiplier = 0.5f;
+            Attacking.enemyHealthMultiplier = 2;
+        }
     }
 
     public void Rebind()
     {
         playerInput.enabled = false;
-        settingsDropdown.gameObject.SetActive(false);
+        graphicsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
         rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
         rebindJumpButton.gameObject.SetActive(true);
@@ -443,6 +499,7 @@ public class MainMenu : MonoBehaviour
                     }
                 }
                 SceneManager.LoadScene("HubWorld");
+                Time.timeScale = 1;
             }
             else if (deleting)
             {

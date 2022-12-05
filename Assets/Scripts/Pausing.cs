@@ -10,6 +10,7 @@ public class Pausing : MonoBehaviour
     public TextMeshProUGUI pauseText;
     public Button saveButton;
     public Button loadButton;
+    public Button menuButton;
     public Button hubButton;
     public Button starButton;
     public TextMeshProUGUI objectiveText1;
@@ -44,6 +45,7 @@ public class Pausing : MonoBehaviour
             {
                 saveButton.gameObject.SetActive(true);
                 loadButton.gameObject.SetActive(true);
+                menuButton.gameObject.SetActive(true);
             }
             else
             {
@@ -58,6 +60,7 @@ public class Pausing : MonoBehaviour
             pauseText.gameObject.SetActive(false);
             saveButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
+            menuButton.gameObject.SetActive(false);
             hubButton.gameObject.SetActive(false);
             starButton.gameObject.SetActive(false);
             objectiveText1.gameObject.SetActive(false);
@@ -75,5 +78,16 @@ public class Pausing : MonoBehaviour
         objectiveText1.gameObject.SetActive(true);
         objectiveText2.gameObject.SetActive(true);
         objectiveText3.gameObject.SetActive(true);
+    }
+
+    public void ToHub()
+    {
+        SceneManager.LoadScene("HubWorld");
+        Time.timeScale = 1;
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
