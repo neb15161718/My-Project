@@ -13,5 +13,9 @@ public class EnterLevels : MonoBehaviour
         {
             SceneManager.LoadScene("CloudyClouds");
         }
+        else if (other.gameObject.name == "FutureFacilityEntrance")
+        {
+            SceneManager.LoadScene("FutureFacility");
+        }
     }
 }

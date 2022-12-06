@@ -88,9 +88,11 @@ public class Movement : MonoBehaviour
             if (grounded)
             {
                 animator.SetBool("Jumping", false);
+                animator.SetBool("Grounded", true);
             }
             else
             {
+                animator.SetBool("Grounded", false);
                 jumpDirection = transform.eulerAngles.y;
             }
         }
@@ -119,24 +121,19 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (collision.gameObject.tag == "MovingPlatform")
         {
-            //grounded = true;
-            animator.SetBool("Grounded", true);
-            animator.SetBool("Jumping", false);
+            transform.parent = collision.transform;
         }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (collision.gameObject.tag == "MovingPlatform")
         {
-            //grounded = false;
-            animator.SetBool("Grounded", false);
-            Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-            jumpDirection = transform.eulerAngles.y;
+            transform.parent = null;
         }
     }
 
