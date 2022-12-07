@@ -10,6 +10,11 @@ public class MainMenu : MonoBehaviour
 {
     public TextMeshProUGUI mainMenuText;
     public TextMeshProUGUI confirmText;
+    public TextMeshProUGUI difficultyText;
+    public TextMeshProUGUI graphicsText;
+    public TextMeshProUGUI jumpText;
+    public TextMeshProUGUI sprintText;
+    public TextMeshProUGUI attackText;
     public Button playButton;
     public Button settingsButton;
     public Button file1Button;
@@ -38,8 +43,8 @@ public class MainMenu : MonoBehaviour
     TextMeshProUGUI rebindAttackText;
     Button button;
     public TMP_InputField inputField;
-    public TMP_Dropdown graphicsDropdown;
     public TMP_Dropdown difficultyDropdown;
+    public TMP_Dropdown graphicsDropdown;
     public RenderPipelineAsset[] qualityLevels;
     string[] names;
     bool deleting;
@@ -195,6 +200,11 @@ public class MainMenu : MonoBehaviour
 
     public void Back()
     {
+        difficultyText.gameObject.SetActive(false);
+        graphicsText.gameObject.SetActive(false);
+        jumpText.gameObject.SetActive(false);
+        sprintText.gameObject.SetActive(false);
+        attackText.gameObject.SetActive(false);
         file1Button.gameObject.SetActive(false);
         file2Button.gameObject.SetActive(false);
         file3Button.gameObject.SetActive(false);
@@ -202,8 +212,8 @@ public class MainMenu : MonoBehaviour
         copyFileButton.gameObject.SetActive(false);
         renameFileButton.gameObject.SetActive(false);
         backButton.gameObject.SetActive(false);
-        graphicsDropdown.gameObject.SetActive(false);
         difficultyDropdown.gameObject.SetActive(false);
+        graphicsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
         rebindJumpButton.gameObject.SetActive(false);
         rebindSprintButton.gameObject.SetActive(false);
@@ -301,8 +311,10 @@ public class MainMenu : MonoBehaviour
         mainMenuText.gameObject.SetActive(false);
         playButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
-        graphicsDropdown.gameObject.SetActive(true);
+        difficultyText.gameObject.SetActive(true);
+        graphicsText.gameObject.SetActive(true);
         difficultyDropdown.gameObject.SetActive(true);
+        graphicsDropdown.gameObject.SetActive(true);
         rebindButton.gameObject.SetActive(true);
         backButton.gameObject.SetActive(true);
     }
@@ -337,8 +349,14 @@ public class MainMenu : MonoBehaviour
     public void Rebind()
     {
         playerInput.enabled = false;
+        difficultyText.gameObject.SetActive(false);
+        graphicsText.gameObject.SetActive(false);
+        difficultyDropdown.gameObject.SetActive(false);
         graphicsDropdown.gameObject.SetActive(false);
         rebindButton.gameObject.SetActive(false);
+        jumpText.gameObject.SetActive(true);
+        sprintText.gameObject.SetActive(true);
+        attackText.gameObject.SetActive(true);
         rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
         rebindJumpButton.gameObject.SetActive(true);
         rebindSprintText.text = sprintReference.action.GetBindingDisplayString();
