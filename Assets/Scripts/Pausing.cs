@@ -49,7 +49,7 @@ public class Pausing : MonoBehaviour
                 saveButton.gameObject.SetActive(true);
                 loadButton.gameObject.SetActive(true);
                 menuButton.gameObject.SetActive(true);
-                starButton.gameObject.transform.position = new Vector3(starButton.gameObject.transform.position.x, -200, starButton.gameObject.transform.position.z);
+                starButton.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -200);
                 starButton.gameObject.SetActive(true);
             }
             else
@@ -79,7 +79,10 @@ public class Pausing : MonoBehaviour
 
     public void DisplayStars()
     {
-        pauseText.enabled = false;
+        pauseText.gameObject.SetActive(false);
+        saveButton.gameObject.SetActive(false);
+        loadButton.gameObject.SetActive(false);
+        menuButton.gameObject.SetActive(false);
         hubButton.gameObject.SetActive(false);
         starButton.gameObject.SetActive(false);
         objectiveText1.gameObject.SetActive(true);
@@ -88,36 +91,90 @@ public class Pausing : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "HubWorld")
         {
             nextButton.gameObject.SetActive(true);
-            backButton.gameObject.SetActive(true);
             levelDisplaying = 0;
+            ChangeLevelDisplayed();
         }
     }
 
     public void Next()
     {
+        levelDisplaying += 1;
+        ChangeLevelDisplayed();
         if (levelDisplaying > 0)
         {
             backButton.gameObject.SetActive(true);
         }
-        levelDisplaying += 1;
-        ChangeLevelDisplayed();
     }
 
     public void Back()
     {
+        levelDisplaying -= 1;
+        ChangeLevelDisplayed();
         if (levelDisplaying == 0)
         {
             backButton.gameObject.SetActive(false);
         }
-        levelDisplaying -= 1;
-        ChangeLevelDisplayed();
     }
 
     void ChangeLevelDisplayed()
     {
         if (levelDisplaying == 0)
         {
-            
+            objectiveText1.text = "1 - Enemies";
+            objectiveText2.text = "2 - Steps";
+            objectiveText3.text = "3 - Jump";
+            int i = 0;
+            foreach (string stars in Collectibles.starList)
+            {      
+                if (Collectibles.starList != null)
+                {
+                    if (Collectibles.starList[i] == "1")
+                    {
+                        if (i == 0)
+                        {
+                            objectiveText1.SetText("\u2713 " + objectiveText1.text);
+                        }
+                        if (i == 1)
+                        {
+                            objectiveText2.SetText("\u2713 " + objectiveText2.text);
+                        }
+                        if (i == 2)
+                        {
+                            objectiveText3.SetText("\u2713 " + objectiveText3.text);
+                        }
+                    }
+                }
+                i++;
+            }
+        }
+        else if (levelDisplaying == 1)
+        {
+            objectiveText1.text = "1 - Diamonds";
+            objectiveText2.text = "2 - Steps";
+            objectiveText3.text = "3 - Jump";
+            int i = 0;
+            foreach (string stars in Collectibles.starList)
+            {
+                if (Collectibles.starList != null)
+                {
+                    if (Collectibles.starList[i] == "1")
+                    {
+                        if (i == 3)
+                        {
+                            objectiveText1.SetText("\u2713 " + objectiveText1.text);
+                        }
+                        if (i == 4)
+                        {
+                            objectiveText2.SetText("\u2713 " + objectiveText2.text);
+                        }
+                        if (i == 5)
+                        {
+                            objectiveText3.SetText("\u2713 " + objectiveText3.text);
+                        }
+                    }
+                }
+                i++;
+            }
         }
     }
 

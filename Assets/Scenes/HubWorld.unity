@@ -144,6 +144,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 446912777}
     - target: {fileID: 1456913430, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
+      propertyPath: backButton
+      value: 
+      objectReference: {fileID: 940642060}
+    - target: {fileID: 1456913430, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: backbutton
       value: 
       objectReference: {fileID: 940642060}
