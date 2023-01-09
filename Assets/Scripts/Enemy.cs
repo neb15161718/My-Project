@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Enemy : MonoBehaviour
     IEnumerator attackCoroutine;
     bool attacking;
     bool hit;
+    public string type;
+    public GameObject projectile;
+    float diff;
 
     void Start()
     {
@@ -46,6 +50,21 @@ public class Enemy : MonoBehaviour
         {
             animator.SetBool("Moving", false);
         }
+        if (type == "soldier")
+        {
+            Vector3 difference = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            diff = difference.sqrMagnitude;
+            if (diff < 10 & attacking == false)
+            {
+                attackCoroutine = Attack();
+                StartCoroutine(attackCoroutine);
+                attacking = true;
+            }
+            else if (diff >= 10)
+            {
+                attacking = false;
+            }
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -53,8 +72,9 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = true;
-            if (!attacking)
+            if (!attacking & type == "grunt")
             {
+                attackCoroutine = Attack();
                 StartCoroutine(attackCoroutine);
                 attacking = true;
             }
@@ -66,35 +86,50 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = false;
-            attacking = false;
+            if (type == "grunt")
+            {
+                attacking = false;
+            }
         }
     }
 
     IEnumerator Attack()
     {
-        if (hit)
+        if (type == "grunt")
         {
-            yield return new WaitForSeconds(3);
-            hit = false;
-        }
-        while (!dead & touchingPlayer)
-        {
-            animator.SetTrigger("Attack");
-            yield return new WaitForSeconds(1.1f);
-            if (touchingPlayer)
+            if (hit)
             {
-                if (Attacking.Instance.health > 0)
-                {
-                    Attacking.Instance.health = Attacking.Instance.health - 1;
-                    Attacking.Instance.TakeDamage();
-                }
-                if (Attacking.Instance.health <= 0)
-                {
-                    Attacking.Instance.Die();
-                }
+                yield return new WaitForSeconds(3);
+                hit = false;
             }
-            yield return new WaitForSeconds(3);
-        }  
+            while (!dead & touchingPlayer)
+            {
+                animator.SetTrigger("Attack");
+                yield return new WaitForSeconds(1.1f);
+                if (touchingPlayer)
+                {
+                    if (Attacking.Instance.health > 0)
+                    {
+                        Attacking.Instance.health = Attacking.Instance.health - 1;
+                        Attacking.Instance.TakeDamage();
+                    }
+                    if (Attacking.Instance.health <= 0)
+                    {
+                        Attacking.Instance.Die();
+                    }
+                }
+                yield return new WaitForSeconds(3);
+            }
+        }
+        else if (type == "soldier")
+        {
+            while (!dead & diff < 10)
+            {
+                GameObject bullet = Instantiate(projectile, transform.position + new Vector3(0, 2, 0), transform.rotation);
+                bullet.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 1000);
+                yield return new WaitForSeconds(1);
+            }
+        }
     }
 
     public void Die()
