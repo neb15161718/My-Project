@@ -34,8 +34,14 @@ public class Enemy : MonoBehaviour
         {
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Vector3 difference = target - new Vector3(transform.position.x, 0, transform.position.z);
-            float diff = difference.sqrMagnitude;
-            if (diff < 100)
+            diff = difference.sqrMagnitude;
+            if (diff < 100 & type == "grunt")
+            {
+                transform.LookAt(target);
+                transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
+                animator.SetBool("Moving", true);
+            }
+            else if (diff < 100 & diff >= 50 & type == "soldier")
             {
                 transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
@@ -54,14 +60,15 @@ public class Enemy : MonoBehaviour
         {
             Vector3 difference = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(player.transform.position.x, 0, player.transform.position.z);
             diff = difference.sqrMagnitude;
-            if (diff < 10 & attacking == false)
+            if (diff < 50 & !attacking)
             {
                 attackCoroutine = Attack();
                 StartCoroutine(attackCoroutine);
                 attacking = true;
             }
-            else if (diff >= 10)
+            else if (diff >= 50)
             {
+                StopCoroutine(attackCoroutine);
                 attacking = false;
             }
         }
@@ -110,7 +117,7 @@ public class Enemy : MonoBehaviour
                 {
                     if (Attacking.Instance.health > 0)
                     {
-                        Attacking.Instance.health = Attacking.Instance.health - 1;
+                        Attacking.Instance.health--;
                         Attacking.Instance.TakeDamage();
                     }
                     if (Attacking.Instance.health <= 0)
@@ -123,9 +130,9 @@ public class Enemy : MonoBehaviour
         }
         else if (type == "soldier")
         {
-            while (!dead & diff < 10)
+            while (!dead & diff < 50)
             {
-                GameObject bullet = Instantiate(projectile, transform.position + new Vector3(0, 2, 0), transform.rotation);
+                GameObject bullet = Instantiate(projectile, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
                 bullet.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 1000);
                 yield return new WaitForSeconds(1);
             }

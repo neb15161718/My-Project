@@ -46,13 +46,13 @@ public class Attacking : MonoBehaviour
         if (context.performed & !Pausing.Instance.paused & !dead)
         {
             animator.SetTrigger("Attack");
-            Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(true);
+            Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(false);
             foreach (Enemy enemies in enemyList)
             {
                 enemy = enemies.GetComponent<Enemy>();
                 if (enemy.touchingPlayer)
                 {
-                    enemy.health = enemy.health - 1;
+                    enemy.health--;
                     enemy.TakeDamage();
                     if (enemy.health <= 0)
                     {
@@ -72,7 +72,7 @@ public class Attacking : MonoBehaviour
     Enemy FindClosestEnemy()
     {
         closest = null;
-        Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(true);
+        Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(false);
         foreach (Enemy enemies in enemyList)
         {
             float distance = Mathf.Infinity;
