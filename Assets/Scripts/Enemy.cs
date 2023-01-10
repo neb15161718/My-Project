@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class Enemy : MonoBehaviour
     public string type;
     public GameObject projectile;
     float diff;
+    bool rotate;
 
     void Start()
     {
@@ -73,6 +73,12 @@ public class Enemy : MonoBehaviour
             {
                 StopCoroutine(attackCoroutine);
                 attacking = false;
+            }
+            if (rotate == true)
+            {
+                Vector3 direction = player.transform.position - transform.position;
+                Quaternion toRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 0.02f);
             }
         }
     }
@@ -171,10 +177,10 @@ public class Enemy : MonoBehaviour
     {
         while (!dead & !touchingPlayer)
         {
-            Vector3 direction = player.transform.position - transform.position;
-            Quaternion toRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, Time.deltaTime);
-            yield return new WaitForSeconds(3);
+            rotate = true;
+            yield return new WaitForSeconds(1);
+            rotate = false;
+            yield return new WaitForSeconds(2);
         }
     }
 }
