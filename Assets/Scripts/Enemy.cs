@@ -26,6 +26,10 @@ public class Enemy : MonoBehaviour
         attackCoroutine = Attack();
         attacking = false;
         hit = false;
+        if (type == "soldier")
+        {
+            StartCoroutine(Rotate());
+        }
     }
 
     void FixedUpdate()
@@ -43,7 +47,6 @@ public class Enemy : MonoBehaviour
             }
             else if (diff < 100 & diff >= 50 & type == "soldier")
             {
-                transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
                 animator.SetBool("Moving", true);
             }
@@ -162,5 +165,16 @@ public class Enemy : MonoBehaviour
         hit = true;
         attacking = true;
         StartCoroutine(attackCoroutine);
+    }
+
+    IEnumerator Rotate()
+    {
+        while (!dead & !touchingPlayer)
+        {
+            Vector3 direction = player.transform.position - transform.position;
+            Quaternion toRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, Time.deltaTime);
+            yield return new WaitForSeconds(3);
+        }
     }
 }
