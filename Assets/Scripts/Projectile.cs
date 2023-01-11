@@ -28,6 +28,9 @@ public class Projectile : MonoBehaviour
                 Attacking.Instance.Die(); 
             }
         }
-        Destroy(gameObject);
+        if (other.gameObject != transform.parent.gameObject)
+        {
+            Destroy(gameObject);
+        }
     }
 }

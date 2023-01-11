@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public GameObject projectile;
     float diff;
     bool rotate;
+    bool moving;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
         attackCoroutine = Attack();
         attacking = false;
         hit = false;
+        moving = false;
         if (type == "soldier")
         {
             StartCoroutine(Rotate());
@@ -44,20 +46,25 @@ public class Enemy : MonoBehaviour
                 transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
                 animator.SetBool("Moving", true);
+                moving = true;
             }
             else if (diff < 100 & diff >= 50 & type == "soldier")
             {
+                transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
                 animator.SetBool("Moving", true);
+                moving = true;
             }
             else
             {
                 animator.SetBool("Moving", false);
+                moving = false;
             }
         }
         else
         {
             animator.SetBool("Moving", false);
+            moving = false;
         }
         if (type == "soldier")
         {
@@ -141,8 +148,12 @@ public class Enemy : MonoBehaviour
         {
             while (!dead & diff < 50)
             {
-                GameObject bullet = Instantiate(projectile, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
-                bullet.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 1000);
+                if (!moving)
+                {
+                    animator.SetTrigger("Attack");
+                    GameObject bullet = Instantiate(projectile, transform.position + new Vector3(0, 1.2f, 0), transform.rotation, transform);
+                    bullet.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 1000);
+                }
                 yield return new WaitForSeconds(1);
             }
         }
