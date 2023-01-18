@@ -40,7 +40,6 @@ public class Movement : MonoBehaviour
             Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
             movementVector = camera.transform.TransformDirection(movementVector);
             movementVector = new Vector3(movementVector.x, 0, movementVector.z);
-
             if (inputVector != Vector2.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(movementVector);
