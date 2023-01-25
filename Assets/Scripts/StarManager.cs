@@ -31,6 +31,10 @@ public class StarManager : MonoBehaviour
                 {
                     stars.gameObject.SetActive(true);
                 }
+                if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 6 & Collectibles.starList[6] == "0")
+                {
+                    stars.gameObject.SetActive(true);
+                }
             }
         }
     }
