@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Vector3 difference = target - new Vector3(transform.position.x, 0, transform.position.z);
             diff = difference.sqrMagnitude;
-            if (diff < 100 & type == "grunt")
+            if (diff < 100 & (type == "grunt" || type == "mummy"))
             {
                 transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
@@ -87,6 +87,10 @@ public class Enemy : MonoBehaviour
                 Quaternion toRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 0.02f);
             }
+        }
+        if (type == "mummy" & !dead)
+        {
+            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         }
     }
 
