@@ -45,7 +45,10 @@ public class Enemy : MonoBehaviour
             {
                 transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
-                animator.SetBool("Moving", true);
+                if (type == "grunt")
+                {
+                    animator.SetBool("Moving", true);
+                }
                 moving = true;
             }
             else if (diff < 100 & diff >= 50 & type == "soldier")
@@ -57,7 +60,10 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                animator.SetBool("Moving", false);
+                if (type == "grunt" || type == "soldier")
+                {
+                    animator.SetBool("Moving", false);
+                }
                 moving = false;
             }
         }
@@ -99,7 +105,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = true;
-            if (!attacking & type == "grunt")
+            if (!attacking & (type == "grunt" || type == "mummy"))
             {
                 attackCoroutine = Attack();
                 StartCoroutine(attackCoroutine);
@@ -113,7 +119,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = false;
-            if (type == "grunt")
+            if (type == "grunt" || type == "mummy")
             {
                 attacking = false;
             }
@@ -159,6 +165,25 @@ public class Enemy : MonoBehaviour
                     bullet.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 1000);
                 }
                 yield return new WaitForSeconds(1);
+            }
+        }
+        else if (type == "mummy")
+        {
+            while (!dead & touchingPlayer)
+            {
+                if (touchingPlayer)
+                {
+                    if (Attacking.Instance.health > 0)
+                    {
+                        Attacking.Instance.health--;
+                        Attacking.Instance.TakeDamage();
+                    }
+                    if (Attacking.Instance.health <= 0)
+                    {
+                        Attacking.Instance.Die();
+                    }
+                }
+                yield return new WaitForSeconds(3);
             }
         }
     }

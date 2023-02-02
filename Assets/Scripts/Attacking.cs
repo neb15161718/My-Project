@@ -50,7 +50,7 @@ public class Attacking : MonoBehaviour
             foreach (Enemy enemies in enemyList)
             {
                 enemy = enemies.GetComponent<Enemy>();
-                if (enemy.touchingPlayer & !enemy.dead)
+                if (enemy.touchingPlayer & !enemy.dead & enemy.type != "mummy")
                 {
                     enemy.health--;
                     enemy.TakeDamage();
@@ -78,7 +78,7 @@ public class Attacking : MonoBehaviour
             float distance = Mathf.Infinity;
             Vector3 difference = new Vector3(enemies.transform.position.x, 0, enemies.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z);
             float diff = difference.sqrMagnitude;
-            if (diff < distance & diff < 10 & !enemies.dead)
+            if (diff < distance & diff < 10 & !enemies.dead & enemies.type != "mummy")
             {
                 closest = enemies;
                 distance = diff;
