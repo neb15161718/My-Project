@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
                 moving = false;
             }
         }
-        else
+        else if (type == "grunt" || type == "soldier")
         {
             animator.SetBool("Moving", false);
             moving = false;
