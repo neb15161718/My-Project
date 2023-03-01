@@ -120,12 +120,12 @@ public class Pausing : MonoBehaviour
     {
         if (levelDisplaying == 0)
         {
-            objectiveText1.text = "1 - Enemies";
+            objectiveText1.text = "1 - Grunts";
             objectiveText2.text = "2 - Steps";
             objectiveText3.text = "3 - Jump";
             int i = 0;
             foreach (string stars in Collectibles.starList)
-            {      
+            {
                 if (Collectibles.starList != null)
                 {
                     if (Collectibles.starList[i] == "1")
@@ -150,8 +150,37 @@ public class Pausing : MonoBehaviour
         else if (levelDisplaying == 1)
         {
             objectiveText1.text = "1 - Diamonds";
-            objectiveText2.text = "2 - Steps";
-            objectiveText3.text = "3 - Jump";
+            objectiveText2.text = "2 - Mummies";
+            objectiveText3.text = "3 - Platforms";
+            int i = 0;
+            foreach (string stars in Collectibles.starList)
+            {
+                if (Collectibles.starList != null)
+                {
+                    if (Collectibles.starList[i] == "1")
+                    {
+                        if (i == 3)
+                        {
+                            objectiveText1.SetText("\u2713 " + objectiveText1.text);
+                        }
+                        if (i == 4)
+                        {
+                            objectiveText2.SetText("\u2713 " + objectiveText2.text);
+                        }
+                        if (i == 5)
+                        {
+                            objectiveText3.SetText("\u2713 " + objectiveText3.text);
+                        }
+                    }
+                }
+                i++;
+            }
+        }
+        else if (levelDisplaying == 2)
+        {
+            objectiveText1.text = "1 - Soldiers";
+            objectiveText2.text = "2 - ";
+            objectiveText3.text = "3 - ";
             int i = 0;
             foreach (string stars in Collectibles.starList)
             {
