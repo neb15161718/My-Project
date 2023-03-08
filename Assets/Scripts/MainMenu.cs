@@ -8,6 +8,12 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject menu;
+    public GameObject fileSelect;
+    public GameObject confirm;
+    public GameObject settings;
+    public GameObject rebind;
+    public GameObject savedRebinds;
     public TextMeshProUGUI mainMenuText;
     public TextMeshProUGUI confirmText;
     public TextMeshProUGUI difficultyText;
@@ -122,16 +128,8 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        mainMenuText.gameObject.SetActive(false);
-        playButton.gameObject.SetActive(false);
-        settingsButton.gameObject.SetActive(false);
-        file1Button.gameObject.SetActive(true);
-        file2Button.gameObject.SetActive(true);
-        file3Button.gameObject.SetActive(true);
-        deleteFileButton.gameObject.SetActive(true);
-        copyFileButton.gameObject.SetActive(true);
-        renameFileButton.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        menu.gameObject.SetActive(false);
+        fileSelect.gameObject.SetActive(true);
         if (File.Exists(Application.persistentDataPath + "/names.json"))
         {
             names = (File.ReadAllText(Application.persistentDataPath + "/names.json")).Split(",");
@@ -200,32 +198,22 @@ public class MainMenu : MonoBehaviour
 
     public void Back()
     {
-        difficultyText.gameObject.SetActive(false);
-        graphicsText.gameObject.SetActive(false);
-        jumpText.gameObject.SetActive(false);
-        sprintText.gameObject.SetActive(false);
-        attackText.gameObject.SetActive(false);
-        file1Button.gameObject.SetActive(false);
-        file2Button.gameObject.SetActive(false);
-        file3Button.gameObject.SetActive(false);
-        deleteFileButton.gameObject.SetActive(false);
-        copyFileButton.gameObject.SetActive(false);
-        renameFileButton.gameObject.SetActive(false);
-        backButton.gameObject.SetActive(false);
-        difficultyDropdown.gameObject.SetActive(false);
-        graphicsDropdown.gameObject.SetActive(false);
-        rebindButton.gameObject.SetActive(false);
-        rebindJumpButton.gameObject.SetActive(false);
-        rebindSprintButton.gameObject.SetActive(false);
-        rebindAttackButton.gameObject.SetActive(false);
-        saveRebindButton.gameObject.SetActive(false);
-        loadRebindButton.gameObject.SetActive(false);
-        rebind1Button.gameObject.SetActive(false);
-        rebind2Button.gameObject.SetActive(false);
-        rebind3Button.gameObject.SetActive(false);
-        mainMenuText.gameObject.SetActive(true);
-        playButton.gameObject.SetActive(true);
-        settingsButton.gameObject.SetActive(true);
+        if (rebind.gameObject.activeSelf)
+        {
+            rebind.gameObject.SetActive(false);
+            settings.gameObject.SetActive(true);
+        }
+        else if (savedRebinds.gameObject.activeSelf)
+        {
+            savedRebinds.gameObject.SetActive(false);
+            rebind.gameObject.SetActive(true);
+        }
+        else
+        {
+            fileSelect.gameObject.SetActive(false);
+            settings.gameObject.SetActive(false);
+            menu.gameObject.SetActive(true);
+        }
         deleting = false;
         copying = false;
         renaming = false;
@@ -264,16 +252,8 @@ public class MainMenu : MonoBehaviour
 
     public void No()
     {
-        confirmText.gameObject.SetActive(false);
-        yesButton.gameObject.SetActive(false);
-        noButton.gameObject.SetActive(false);
-        file1Button.gameObject.SetActive(true);
-        file2Button.gameObject.SetActive(true);
-        file3Button.gameObject.SetActive(true);
-        deleteFileButton.gameObject.SetActive(true);
-        copyFileButton.gameObject.SetActive(true);
-        renameFileButton.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        confirm.gameObject.SetActive(false);
+        fileSelect.gameObject.SetActive(true);
         deleting = false;
         copying = false;
         renaming = false;
@@ -287,16 +267,8 @@ public class MainMenu : MonoBehaviour
     {
         if (inputField.text != "")
         {
-            file1Button.gameObject.SetActive(false);
-            file2Button.gameObject.SetActive(false);
-            file3Button.gameObject.SetActive(false);
-            deleteFileButton.gameObject.SetActive(false);
-            copyFileButton.gameObject.SetActive(false);
-            renameFileButton.gameObject.SetActive(false);
-            backButton.gameObject.SetActive(false);
-            confirmText.gameObject.SetActive(true);
-            yesButton.gameObject.SetActive(true);
-            noButton.gameObject.SetActive(true);
+            fileSelect.gameObject.SetActive(false);
+            confirm.gameObject.SetActive(true);
         }
         else
         {
@@ -308,15 +280,8 @@ public class MainMenu : MonoBehaviour
 
     public void Settings()
     {
-        mainMenuText.gameObject.SetActive(false);
-        playButton.gameObject.SetActive(false);
-        settingsButton.gameObject.SetActive(false);
-        difficultyText.gameObject.SetActive(true);
-        graphicsText.gameObject.SetActive(true);
-        difficultyDropdown.gameObject.SetActive(true);
-        graphicsDropdown.gameObject.SetActive(true);
-        rebindButton.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        menu.gameObject.SetActive(false);
+        settings.gameObject.SetActive(true);
     }
 
     public void ChangeGraphics()
@@ -349,22 +314,8 @@ public class MainMenu : MonoBehaviour
     public void Rebind()
     {
         playerInput.enabled = false;
-        difficultyText.gameObject.SetActive(false);
-        graphicsText.gameObject.SetActive(false);
-        difficultyDropdown.gameObject.SetActive(false);
-        graphicsDropdown.gameObject.SetActive(false);
-        rebindButton.gameObject.SetActive(false);
-        jumpText.gameObject.SetActive(true);
-        sprintText.gameObject.SetActive(true);
-        attackText.gameObject.SetActive(true);
-        rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
-        rebindJumpButton.gameObject.SetActive(true);
-        rebindSprintText.text = sprintReference.action.GetBindingDisplayString();
-        rebindSprintButton.gameObject.SetActive(true);
-        rebindAttackText.text = attackReference.action.GetBindingDisplayString();
-        rebindAttackButton.gameObject.SetActive(true);
-        saveRebindButton.gameObject.SetActive(true);
-        loadRebindButton.gameObject.SetActive(true);
+        settings.gameObject.SetActive(false);
+        rebind.gameObject.SetActive(true);
     }
 
     public void StartRebind(string action)
@@ -447,28 +398,14 @@ public class MainMenu : MonoBehaviour
     public void SaveRebind()
     {
         savingRebind = true;
-        rebindJumpButton.gameObject.SetActive(false);
-        rebindSprintButton.gameObject.SetActive(false);
-        rebindAttackButton.gameObject.SetActive(false);
-        saveRebindButton.gameObject.SetActive(false);
-        loadRebindButton.gameObject.SetActive(false);
-        rebind1Button.gameObject.SetActive(true);
-        rebind2Button.gameObject.SetActive(true);
-        rebind3Button.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        rebind.gameObject.SetActive(false);
+        savedRebinds.gameObject.SetActive(true);
     }
     public void LoadRebind()
     {
         loadingRebind = true;
-        rebindJumpButton.gameObject.SetActive(false);
-        rebindSprintButton.gameObject.SetActive(false);
-        rebindAttackButton.gameObject.SetActive(false);
-        saveRebindButton.gameObject.SetActive(false);
-        loadRebindButton.gameObject.SetActive(false);
-        rebind1Button.gameObject.SetActive(true);
-        rebind2Button.gameObject.SetActive(true);
-        rebind3Button.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        rebind.gameObject.SetActive(false);
+        savedRebinds.gameObject.SetActive(true);
     }
 
     public void SaveRebindFile(int file)
@@ -521,16 +458,8 @@ public class MainMenu : MonoBehaviour
             }
             else if (deleting)
             {
-                file1Button.gameObject.SetActive(false);
-                file2Button.gameObject.SetActive(false);
-                file3Button.gameObject.SetActive(false);
-                deleteFileButton.gameObject.SetActive(false);
-                copyFileButton.gameObject.SetActive(false);
-                renameFileButton.gameObject.SetActive(false);
-                backButton.gameObject.SetActive(false);
-                confirmText.gameObject.SetActive(true);
-                yesButton.gameObject.SetActive(true);
-                noButton.gameObject.SetActive(true);
+                fileSelect.gameObject.SetActive(false);
+                confirm.gameObject.SetActive(true);
             }
             else if (renaming)
             {
@@ -560,16 +489,8 @@ public class MainMenu : MonoBehaviour
             }
             else
             {
-                file1Button.gameObject.SetActive(false);
-                file2Button.gameObject.SetActive(false);
-                file3Button.gameObject.SetActive(false);
-                deleteFileButton.gameObject.SetActive(false);
-                copyFileButton.gameObject.SetActive(false);
-                renameFileButton.gameObject.SetActive(false);
-                backButton.gameObject.SetActive(false);
-                confirmText.gameObject.SetActive(true);
-                yesButton.gameObject.SetActive(true);
-                noButton.gameObject.SetActive(true);
+                fileSelect.gameObject.SetActive(false);
+                confirm.gameObject.SetActive(true);
             }
         }
     }
