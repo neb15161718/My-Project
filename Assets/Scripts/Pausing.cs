@@ -179,7 +179,7 @@ public class Pausing : MonoBehaviour
         else if (levelDisplaying == 2)
         {
             objectiveText1.text = "1 - Soldiers";
-            objectiveText2.text = "2 - ";
+            objectiveText2.text = "2 - Conveyors";
             objectiveText3.text = "3 - ";
             int i = 0;
             foreach (string stars in Collectibles.starList)
@@ -188,15 +188,15 @@ public class Pausing : MonoBehaviour
                 {
                     if (Collectibles.starList[i] == "1")
                     {
-                        if (i == 3)
+                        if (i == 6)
                         {
                             objectiveText1.SetText("\u2713 " + objectiveText1.text);
                         }
-                        if (i == 4)
+                        if (i == 7)
                         {
                             objectiveText2.SetText("\u2713 " + objectiveText2.text);
                         }
-                        if (i == 5)
+                        if (i == 8)
                         {
                             objectiveText3.SetText("\u2713 " + objectiveText3.text);
                         }

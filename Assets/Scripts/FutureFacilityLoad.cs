@@ -7,7 +7,7 @@ public class FutureFacilityLoad : MonoBehaviour
         Star[] starList = StarManager.Instance.allStars.gameObject.GetComponentsInChildren<Star>(true);
         foreach (Star stars in starList)
         {
-            if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 6)
+            if (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 6 || (int.Parse(stars.gameObject.name.Substring(stars.gameObject.name.Length - 2)) == 7))
             {
                 stars.gameObject.SetActive(false);
             }
