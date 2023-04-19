@@ -120,9 +120,9 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "MovingPlatform")
+        if (collision.gameObject.tag == "MovingPlatform" || collision.gameObject.tag == "FallingPlatform")
         {
             transform.parent = collision.transform;
         }
@@ -130,7 +130,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "MovingPlatform")
+        if (collision.gameObject.tag == "MovingPlatform" || collision.gameObject.tag == "FallingPlatform")
         {
             transform.parent = null;
         }
