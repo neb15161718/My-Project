@@ -138,7 +138,7 @@ public class Movement : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Death Plane")
+        if (other.gameObject.CompareTag("DeathPlane"))
         {
             Attacking.Instance.dead = true;
             Attacking.Instance.deadText.gameObject.SetActive(true);

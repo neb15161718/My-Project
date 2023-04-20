@@ -2313,7 +2313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 2
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
 --- !u!1001 &1324770424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2655,11 +2655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 79203417, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000046462922
+      value: 0.000000046462922
       objectReference: {fileID: 0}
     - target: {fileID: 79203417, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000009835125
+      value: -0.000000009835125
       objectReference: {fileID: 0}
     - target: {fileID: 693052803, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_Follow
@@ -2687,11 +2687,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000039158166
+      value: 0.000000039158166
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000007549378
+      value: -0.000000007549378
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2703,11 +2703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000003801382
+      value: 0.00000003801382
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00000000877199
+      value: -0.00000000877199
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_RootOrder
@@ -2735,11 +2735,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000032917104
+      value: 0.000000032917104
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000003445719
+      value: -0.000000003445719
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3631,7 +3631,7 @@ GameObject:
   - component: {fileID: 1867679784}
   m_Layer: 0
   m_Name: Death Plane
-  m_TagString: Untagged
+  m_TagString: DeathPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

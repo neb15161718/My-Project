@@ -180,7 +180,7 @@ public class Pausing : MonoBehaviour
         {
             objectiveText1.text = "1 - Soldiers";
             objectiveText2.text = "2 - Conveyors";
-            objectiveText3.text = "3 - ";
+            objectiveText3.text = "3 - Falling";
             int i = 0;
             foreach (string stars in Collectibles.starList)
             {

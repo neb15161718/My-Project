@@ -1,16 +1,16 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
     bool falling;
-    public Transform player;
 
     void FixedUpdate()
     {
         if (falling)
         {
             transform.position = transform.position - new Vector3(0,1,0);
-            player.parent = transform;
         }
     }
 
@@ -18,15 +18,16 @@ public class FallingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            falling = true;
+            StartCoroutine(Fall());
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    IEnumerator Fall()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            falling = false;
-        }
+        yield return new WaitForSeconds(2);
+        falling = true;
+        yield return new WaitForSeconds(5);
+        falling = false;
+        transform.position = new Vector3(transform.position.x, -1, transform.position.z);
     }
 }
