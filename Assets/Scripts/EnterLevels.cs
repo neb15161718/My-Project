@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class EnterLevels : MonoBehaviour
 {
+    public TMP_Text alertText;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "PlainPlainsEntrance")
@@ -11,11 +15,34 @@ public class EnterLevels : MonoBehaviour
         }
         else if (other.gameObject.name == "CloudyCloudsEntrance")
         {
-            SceneManager.LoadScene("CloudyClouds");
+            if (Collectibles.stars >= 2)
+            {
+                SceneManager.LoadScene("CloudyClouds");
+            }
+            else
+            {
+                alertText.text = "You need 2 stars to enter this level";
+                StartCoroutine(DisplayAlert());
+            }
         }
         else if (other.gameObject.name == "FutureFacilityEntrance")
         {
-            SceneManager.LoadScene("FutureFacility");
+            if (Collectibles.stars >= 4)
+            {
+                SceneManager.LoadScene("FutureFacility");
+            }
+            else
+            {
+                alertText.text = "You need 4 stars to enter this level";
+                StartCoroutine(DisplayAlert());
+            }
         }
+    }
+
+    IEnumerator DisplayAlert()
+    {
+        alertText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        alertText.gameObject.SetActive(false);
     }
 }
