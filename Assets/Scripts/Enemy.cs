@@ -5,18 +5,18 @@ public class Enemy : MonoBehaviour
 {
     public Transform player;
     Vector3 target;
-    Animator animator;
+    public Animator animator;
     public int health;
     public bool touchingPlayer;
     public bool dead;
-    IEnumerator attackCoroutine;
-    bool attacking;
-    bool hit;
+    public IEnumerator attackCoroutine;
+    public bool attacking;
+    public bool hit;
     public string type;
     public GameObject projectile;
     float diff;
     bool rotate;
-    bool moving;
+    public bool moving;
 
     void Start()
     {
@@ -41,14 +41,11 @@ public class Enemy : MonoBehaviour
             target = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Vector3 difference = target - new Vector3(transform.position.x, 0, transform.position.z);
             diff = difference.sqrMagnitude;
-            if (diff < 100 & (type == "grunt" || type == "mummy"))
+            if (diff < 100 & (type != "soldier"))
             {
                 transform.LookAt(target);
                 transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
-                if (type == "grunt")
-                {
-                    animator.SetBool("Moving", true);
-                }
+                animator.SetBool("Moving", true);
                 moving = true;
             }
             else if (diff < 100 & diff >= 50 & type == "soldier")
@@ -60,18 +57,12 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                if (type == "grunt" || type == "soldier")
-                {
-                    animator.SetBool("Moving", false);
-                }
+                animator.SetBool("Moving", false);
                 moving = false;
             }
         }
-        else if (type == "grunt" || type == "soldier")
-        {
-            animator.SetBool("Moving", false);
-            moving = false;
-        }
+        animator.SetBool("Moving", false);
+        moving = false;
         if (type == "soldier")
         {
             Vector3 difference = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(player.transform.position.x, 0, player.transform.position.z);
@@ -105,7 +96,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = true;
-            if (!attacking & (type == "grunt" || type == "mummy"))
+            if (!attacking & (type != "soldier"))
             {
                 attackCoroutine = Attack();
                 StartCoroutine(attackCoroutine);
@@ -119,14 +110,14 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             touchingPlayer = false;
-            if (type == "grunt" || type == "mummy")
+            if (type != "soldier")
             {
                 attacking = false;
             }
         }
     }
 
-    IEnumerator Attack()
+    public IEnumerator Attack()
     {
         if (type == "grunt")
         {
