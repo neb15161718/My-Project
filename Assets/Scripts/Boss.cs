@@ -1,9 +1,8 @@
+using System.Collections;
 using UnityEngine;
 
 public class Boss : Enemy
-{
-    bool fightStarted;
-
+{   
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -16,11 +15,10 @@ public class Boss : Enemy
         moving = false;
     }
 
-    void Update()
+    IEnumerator Attack()
     {
-        if (player.position.z >= 20)
-        {
-            fightStarted = true;
-        }
+        int random = Random.Range(0, 2);
+        print(random);
+        yield return null;
     }
 }

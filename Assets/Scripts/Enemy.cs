@@ -117,7 +117,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator Attack()
+    IEnumerator Attack()
     {
         if (type == "grunt")
         {
