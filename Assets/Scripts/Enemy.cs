@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -100,7 +100,6 @@ public class Enemy : MonoBehaviour
             {
                 attackCoroutine = Attack();
                 StartCoroutine(attackCoroutine);
-                attacking = true;
             }
         }
     }
@@ -121,6 +120,7 @@ public class Enemy : MonoBehaviour
     {
         if (type == "grunt")
         {
+            attacking = true;
             if (hit)
             {
                 yield return new WaitForSeconds(3);
@@ -147,6 +147,7 @@ public class Enemy : MonoBehaviour
         }
         else if (type == "soldier")
         {
+            attacking = true;
             while (!dead & diff < 50)
             {
                 if (!moving)
@@ -160,6 +161,7 @@ public class Enemy : MonoBehaviour
         }
         else if (type == "mummy")
         {
+            attacking = true;
             while (!dead & touchingPlayer)
             {
                 if (touchingPlayer)

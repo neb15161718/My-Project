@@ -53,7 +53,14 @@ public class Attacking : MonoBehaviour
                 if (enemy.touchingPlayer & !enemy.dead & enemy.type != "mummy")
                 {
                     enemy.health--;
-                    enemy.TakeDamage();
+                    if (enemy is Boss)
+                    {
+                        Boss.Instance.TakeDamage();
+                    }
+                    else
+                    {
+                        enemy.TakeDamage();
+                    }
                     if (enemy.health <= 0)
                     {
                         enemy.Die();
