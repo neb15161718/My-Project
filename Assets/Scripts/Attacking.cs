@@ -17,6 +17,8 @@ public class Attacking : MonoBehaviour
     public Button hubButton;
     public static float healthMultiplier;
     public static float enemyHealthMultiplier;
+    IEnumerator attackingCooldown;
+    bool attacking;
 
     void Awake()
     {
@@ -34,6 +36,8 @@ public class Attacking : MonoBehaviour
         health = Mathf.CeilToInt(5 * healthMultiplier);
         closest = null;
         dead = false;
+        attackingCooldown = AttackCooldown();
+        attacking = false;
     }
 
     void Update()
@@ -43,8 +47,11 @@ public class Attacking : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.performed & !Pausing.Instance.paused & !dead)
+        if (context.performed & !Pausing.Instance.paused & !dead & !attacking)
         {
+            attacking = true;
+            attackingCooldown = AttackCooldown();
+            StartCoroutine(attackingCooldown);
             animator.SetTrigger("Attack");
             Enemy[] enemyList = StarManager.Instance.allEnemies.GetComponentsInChildren<Enemy>(false);
             foreach (Enemy enemies in enemyList)
@@ -74,6 +81,12 @@ public class Attacking : MonoBehaviour
                 transform.LookAt(closest.transform.position);
             }
         }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(1);
+        attacking = false;
     }
 
     Enemy FindClosestEnemy()

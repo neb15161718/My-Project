@@ -23,6 +23,7 @@ public class Boss : Enemy
         base.OnCollisionEnter(collision);
         if (!attacking)
         {
+            StopCoroutine(attackCoroutine);
             attackCoroutine = Attack();
             StartCoroutine(attackCoroutine);
         }
@@ -30,12 +31,13 @@ public class Boss : Enemy
 
     IEnumerator Attack()
     {
+        // fix Attack() running twice, maybe separate different enemies into separate scripts
         attacking = true;
         while (!dead & touchingPlayer)
         {
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(1.1f);
-            if (touchingPlayer)
+            if (!dead & touchingPlayer)
             {
                 if (Attacking.Instance.health > 0)
                 {
@@ -47,7 +49,7 @@ public class Boss : Enemy
                     Attacking.Instance.Die();
                 }
             }
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1.5f);
         }
     }
 

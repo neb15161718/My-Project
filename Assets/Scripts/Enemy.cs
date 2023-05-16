@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
             {
                 animator.SetTrigger("Attack");
                 yield return new WaitForSeconds(1.1f);
-                if (touchingPlayer)
+                if (!dead & touchingPlayer)
                 {
                     if (Attacking.Instance.health > 0)
                     {
@@ -199,7 +199,6 @@ public class Enemy : MonoBehaviour
     {
         animator.SetTrigger("Damage");
         StopCoroutine(attackCoroutine);
-        attackCoroutine = null;
         attackCoroutine = Attack();
         hit = true;
         attacking = true;
