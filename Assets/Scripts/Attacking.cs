@@ -57,7 +57,7 @@ public class Attacking : MonoBehaviour
             foreach (Enemy enemies in enemyList)
             {
                 enemy = enemies.GetComponent<Enemy>();
-                if (enemy.touchingPlayer & !enemy.dead & enemy.type != "mummy")
+                if (enemy.touchingPlayer & !enemy.dead & enemy is not Mummy)
                 {
                     enemy.health--;
                     if (enemy is Boss)
@@ -67,11 +67,6 @@ public class Attacking : MonoBehaviour
                     else
                     {
                         enemy.TakeDamage();
-                    }
-                    if (enemy.health <= 0)
-                    {
-                        enemy.Die();
-                        StarManager.Instance.EnemyDied(int.Parse(enemy.name.Substring(enemy.name.Length - 2)));
                     }
                 }
             }

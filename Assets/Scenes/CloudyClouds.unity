@@ -816,10 +816,10 @@ PrefabInstance:
       addedObject: {fileID: 316150058}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 316150057}
+      addedObject: {fileID: 316150056}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 316150056}
+      addedObject: {fileID: 316150059}
   m_SourcePrefab: {fileID: 100100000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
 --- !u!4 &316150054 stripped
 Transform:
@@ -858,24 +858,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &316150057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!95 &316150057 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
+  m_PrefabInstance: {fileID: 316150053}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316150055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299eddebfb133114f89992c7c4a8990f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 357768936}
-  health: 0
-  touchingPlayer: 0
-  dead: 0
-  type: mummy
-  projectile: {fileID: 0}
 --- !u!136 &316150058
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -899,6 +886,30 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &316150059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316150055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee178b9cef326c4498cdbdfbe2dc0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 357768936}
+  animator: {fileID: 316150057}
+  health: 0
+  touchingPlayer: 0
+  dead: 0
+  attacking: 0
+  hit: 0
+  type: 
+  projectile: {fileID: 0}
+  moving: 0
+  grunt: {fileID: 0}
+  soldier: {fileID: 0}
 --- !u!114 &319488387 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1580603480, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
@@ -1156,10 +1167,10 @@ PrefabInstance:
       addedObject: {fileID: 403437496}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 403437495}
+      addedObject: {fileID: 403437494}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 403437494}
+      addedObject: {fileID: 403437497}
   m_SourcePrefab: {fileID: 100100000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
 --- !u!4 &403437492 stripped
 Transform:
@@ -1198,24 +1209,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &403437495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!95 &403437495 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
+  m_PrefabInstance: {fileID: 403437491}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403437493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299eddebfb133114f89992c7c4a8990f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 357768936}
-  health: 0
-  touchingPlayer: 0
-  dead: 0
-  type: mummy
-  projectile: {fileID: 0}
 --- !u!136 &403437496
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1239,6 +1237,30 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &403437497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403437493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee178b9cef326c4498cdbdfbe2dc0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 357768936}
+  animator: {fileID: 403437495}
+  health: 0
+  touchingPlayer: 0
+  dead: 0
+  attacking: 0
+  hit: 0
+  type: 
+  projectile: {fileID: 0}
+  moving: 0
+  grunt: {fileID: 0}
+  soldier: {fileID: 0}
 --- !u!1001 &453442020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1913,10 +1935,10 @@ PrefabInstance:
       addedObject: {fileID: 1057385259}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1057385258}
+      addedObject: {fileID: 1057385257}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1057385257}
+      addedObject: {fileID: 1057385260}
   m_SourcePrefab: {fileID: 100100000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
 --- !u!4 &1057385255 stripped
 Transform:
@@ -1955,24 +1977,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1057385258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!95 &1057385258 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
+  m_PrefabInstance: {fileID: 1057385254}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1057385256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299eddebfb133114f89992c7c4a8990f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 357768936}
-  health: 0
-  touchingPlayer: 0
-  dead: 0
-  type: mummy
-  projectile: {fileID: 0}
 --- !u!136 &1057385259
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1996,6 +2005,30 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1057385260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057385256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee178b9cef326c4498cdbdfbe2dc0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 357768936}
+  animator: {fileID: 1057385258}
+  health: 0
+  touchingPlayer: 0
+  dead: 0
+  attacking: 0
+  hit: 0
+  type: 
+  projectile: {fileID: 0}
+  moving: 0
+  grunt: {fileID: 0}
+  soldier: {fileID: 0}
 --- !u!1 &1074435480
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,10 +2156,10 @@ PrefabInstance:
       addedObject: {fileID: 1282813512}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1282813513}
+      addedObject: {fileID: 1282813517}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1282813517}
+      addedObject: {fileID: 1282813518}
   m_SourcePrefab: {fileID: 100100000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
 --- !u!1 &1282813511 stripped
 GameObject:
@@ -2156,24 +2189,11 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &1282813513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!95 &1282813513 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
+  m_PrefabInstance: {fileID: 1282813510}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282813511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299eddebfb133114f89992c7c4a8990f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 357768936}
-  health: 0
-  touchingPlayer: 0
-  dead: 0
-  type: mummy
-  projectile: {fileID: 0}
 --- !u!4 &1282813515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
@@ -2206,6 +2226,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1282813518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282813511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee178b9cef326c4498cdbdfbe2dc0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 357768936}
+  animator: {fileID: 1282813513}
+  health: 0
+  touchingPlayer: 0
+  dead: 0
+  attacking: 0
+  hit: 0
+  type: 
+  projectile: {fileID: 0}
+  moving: 0
+  grunt: {fileID: 0}
+  soldier: {fileID: 0}
 --- !u!1 &1304823535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,11 +2699,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 79203417, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000046462922
+      value: -0.000000046462926
       objectReference: {fileID: 0}
     - target: {fileID: 79203417, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000009835125
+      value: 0.0000000098351265
       objectReference: {fileID: 0}
     - target: {fileID: 693052803, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_Follow
@@ -2687,11 +2731,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000039158166
+      value: -0.000000019270857
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000007549378
+      value: 0.0000000037152657
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2703,11 +2747,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000003801382
+      value: -0.000000038013837
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000000877199
+      value: 0.0000000087719965
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_RootOrder
@@ -2735,11 +2779,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000032917104
+      value: -0.000000032917104
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000003445719
+      value: 0.000000003445719
       objectReference: {fileID: 0}
     - target: {fileID: 6354849531869989977, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3270,10 +3314,10 @@ PrefabInstance:
       addedObject: {fileID: 1799334962}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1799334961}
+      addedObject: {fileID: 1799334960}
     - targetCorrespondingSourceObject: {fileID: 100070, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1799334960}
+      addedObject: {fileID: 1799334963}
   m_SourcePrefab: {fileID: 100100000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
 --- !u!4 &1799334958 stripped
 Transform:
@@ -3312,24 +3356,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1799334961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!95 &1799334961 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 3353e4f866c39d043a315b41717c9bb7, type: 3}
+  m_PrefabInstance: {fileID: 1799334957}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799334959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299eddebfb133114f89992c7c4a8990f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 357768936}
-  health: 0
-  touchingPlayer: 0
-  dead: 0
-  type: mummy
-  projectile: {fileID: 0}
 --- !u!136 &1799334962
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3353,6 +3384,30 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1799334963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799334959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee178b9cef326c4498cdbdfbe2dc0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 357768936}
+  animator: {fileID: 1799334961}
+  health: 0
+  touchingPlayer: 0
+  dead: 0
+  attacking: 0
+  hit: 0
+  type: 
+  projectile: {fileID: 0}
+  moving: 0
+  grunt: {fileID: 0}
+  soldier: {fileID: 0}
 --- !u!1001 &1830408388
 PrefabInstance:
   m_ObjectHideFlags: 0
