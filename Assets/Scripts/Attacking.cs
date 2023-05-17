@@ -7,6 +7,7 @@ using TMPro;
 public class Attacking : MonoBehaviour
 {
     Animator animator;
+    public int healthCap;
     public int health;
     public TextMeshProUGUI healthDisplay;
     Enemy enemy;
@@ -33,7 +34,8 @@ public class Attacking : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        health = Mathf.CeilToInt(5 * healthMultiplier);
+        healthCap = Mathf.CeilToInt(5 * healthMultiplier);
+        health = healthCap;
         closest = null;
         dead = false;
         attackingCooldown = AttackCooldown();

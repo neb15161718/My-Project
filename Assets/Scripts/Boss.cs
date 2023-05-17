@@ -5,7 +5,7 @@ public class Boss : Enemy
 {
     public static Boss Instance;
 
-    void Start()
+    new void Start()
     {
         animator = GetComponent<Animator>();
         health = Mathf.CeilToInt(15 * Attacking.enemyHealthMultiplier);
@@ -31,7 +31,6 @@ public class Boss : Enemy
 
     IEnumerator Attack()
     {
-        // fix Attack() running twice, maybe separate different enemies into separate scripts
         attacking = true;
         while (!dead & touchingPlayer)
         {
@@ -55,6 +54,20 @@ public class Boss : Enemy
 
     new public void TakeDamage()
     {
+        if (health <= 0)
+        {
+            StartCoroutine(Die());
+            StarManager.Instance.EnemyDied(int.Parse(name.Substring(name.Length - 2)));
+        }
         animator.SetTrigger("Damage");
+    }
+
+    IEnumerator Die()
+    {
+        dead = true;
+        animator.SetTrigger("Die");
+        animator.SetBool("Moving", false);
+        yield return new WaitForSeconds(3);
+        gameObject.SetActive(false);
     }
 }

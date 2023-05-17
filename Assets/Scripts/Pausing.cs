@@ -211,6 +211,7 @@ public class Pausing : MonoBehaviour
     {
         SceneManager.LoadScene("HubWorld");
         Time.timeScale = 1;
+        Attacking.Instance.health = Attacking.Instance.healthCap;
     }
 
     public void ToMenu()

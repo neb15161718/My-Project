@@ -37,6 +37,18 @@ public class EnterLevels : MonoBehaviour
                 StartCoroutine(DisplayAlert());
             }
         }
+        else if (other.gameObject.name == "DangerDungeonEntrance")
+        {
+            if (Collectibles.stars >= 6)
+            {
+                SceneManager.LoadScene("DangerDungeon");
+            }
+            else
+            {
+                alertText.text = "You need 6 stars to enter this level";
+                StartCoroutine(DisplayAlert());
+            }
+        }
     }
 
     IEnumerator DisplayAlert()
