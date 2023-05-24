@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using TMPro;
+using System;
 
 public class MainMenu : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class MainMenu : MonoBehaviour
     public GameObject settings;
     public GameObject rebind;
     public GameObject savedRebinds;
+    public GameObject UI;
     public Button file1Button;
     public Button file2Button;
     public Button file3Button;
@@ -23,6 +25,8 @@ public class MainMenu : MonoBehaviour
     public Button rebindJumpButton;
     public Button rebindSprintButton;
     public Button rebindAttackButton;
+    public Button healthDisplayButton;
+    public Button starDisplayButton;
     TextMeshProUGUI deleteText;
     TextMeshProUGUI copyText;
     TextMeshProUGUI renameText;
@@ -66,15 +70,13 @@ public class MainMenu : MonoBehaviour
         rebindJumpText = rebindJumpButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindSprintText = rebindSprintButton.GetComponentInChildren<TextMeshProUGUI>();
         rebindAttackText = rebindAttackButton.GetComponentInChildren<TextMeshProUGUI>();
-        int graphics;
-        int difficulty;
+        int graphics = 2;
+        int difficulty = 1;
+        Attacking.permanentHealthDisplay = true;
+        Collectibles.permanentStarDisplay = true;
         if (PlayerPrefs.HasKey("Graphics"))
         {
             graphics = PlayerPrefs.GetInt("Graphics");
-        }
-        else
-        {
-            graphics = 2;
         }
         graphicsDropdown.value = graphics;
         QualitySettings.SetQualityLevel(graphics);
@@ -82,10 +84,6 @@ public class MainMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("Difficulty"))
         {
             difficulty = PlayerPrefs.GetInt("Difficulty");
-        }
-        else
-        {
-            difficulty = 1;
         }
         difficultyDropdown.value = difficulty;
         if (difficulty == 0)
@@ -106,6 +104,14 @@ public class MainMenu : MonoBehaviour
         int defaultControls = PlayerPrefs.GetInt("DefaultControls");
         playerInput.actions.LoadBindingOverridesFromJson(PlayerPrefs.GetString("Rebinds" + defaultControls));
         playerInputActions = new Actions();
+        if (PlayerPrefs.HasKey("HealthDisplay"))
+        {
+            Attacking.permanentHealthDisplay = Convert.ToBoolean(PlayerPrefs.GetInt("HealthDisplay"));
+        }
+        if (PlayerPrefs.HasKey("StarDisplay"))
+        {
+            Collectibles.permanentStarDisplay = Convert.ToBoolean(PlayerPrefs.GetInt("StarDisplay"));
+        }
     }
 
     public void Play()
@@ -189,6 +195,11 @@ public class MainMenu : MonoBehaviour
         {
             savedRebinds.gameObject.SetActive(false);
             rebind.gameObject.SetActive(true);
+        }
+        else if (UI.gameObject.activeSelf)
+        {
+            UI.gameObject.SetActive(false);
+            settings.gameObject.SetActive(true);
         }
         else
         {
@@ -403,6 +414,52 @@ public class MainMenu : MonoBehaviour
             playerInput.actions.LoadBindingOverridesFromJson(PlayerPrefs.GetString("Rebinds" + file));
             PlayerPrefs.SetInt("DefaultControls", file);
             savingRebind = false;
+        }
+    }
+
+    public void EditUI()
+    {
+        settings.gameObject.SetActive(false);
+        UI.gameObject.SetActive(true);
+        if (!Attacking.permanentHealthDisplay)
+        {
+            healthDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enable Permanent Health Display";
+        }
+        if (!Collectibles.permanentStarDisplay)
+        {
+            starDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enable Permanent Star Display";
+        }
+    }
+
+    public void HealthDisplay()
+    {
+        if (Attacking.permanentHealthDisplay)
+        {
+            healthDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enable Permanent Health Display";
+            Attacking.permanentHealthDisplay = false;
+            PlayerPrefs.SetInt("HealthDisplay", 0);
+        }
+        else
+        {
+            healthDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Disable Permanent Health Display";
+            Attacking.permanentHealthDisplay = true;
+            PlayerPrefs.SetInt("HealthDisplay", 1);
+        }
+    }
+
+    public void StarDisplay()
+    {
+        if (Collectibles.permanentStarDisplay)
+        {
+            starDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enable Permanent Star Display";
+            Collectibles.permanentStarDisplay = false;
+            PlayerPrefs.SetInt("StarDisplay", 0);
+        }
+        else
+        {
+            starDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Disable Permanent Star Display";
+            Collectibles.permanentStarDisplay = true;
+            PlayerPrefs.SetInt("StarDisplay", 1);
         }
     }
 

@@ -7,6 +7,7 @@ public class Collectibles : MonoBehaviour
     public static int stars;
     public TextMeshProUGUI starDisplay;
     public static string[] starList;
+    public static bool permanentStarDisplay;
 
     void Start()
     {

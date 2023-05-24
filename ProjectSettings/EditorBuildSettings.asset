@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FutureFacility.unity
     guid: 788773a0d81309e4f88f908f8035bd64
+  - enabled: 1
+    path: Assets/Scenes/DangerDungeon.unity
+    guid: 8bf5eb3b28d38fa46a92b2b083085d4c
   m_configObjects: {}
