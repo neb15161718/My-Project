@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using TMPro;
-using System;
 
 public class MainMenu : MonoBehaviour
 {
