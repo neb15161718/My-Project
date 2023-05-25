@@ -10,6 +10,7 @@ public class Heart : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 Attacking.Instance.health++;
+                Attacking.Instance.RecoverHealth();
             }
         }
     }

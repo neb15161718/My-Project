@@ -41,6 +41,10 @@ public class Attacking : MonoBehaviour
         dead = false;
         attackingCooldown = AttackCooldown();
         attacking = false;
+        if (!permanentHealthDisplay)
+        {
+            healthDisplay.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -125,5 +129,21 @@ public class Attacking : MonoBehaviour
     public void TakeDamage()
     {
         animator.SetTrigger("Damage");
+        if (!permanentHealthDisplay)
+        {
+            StartCoroutine(DisplayHealth());
+        }
+    }
+
+    public void RecoverHealth()
+    {
+        StartCoroutine(DisplayHealth());
+    }
+
+    IEnumerator DisplayHealth()
+    {
+        healthDisplay.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        healthDisplay.gameObject.SetActive(false);
     }
 }

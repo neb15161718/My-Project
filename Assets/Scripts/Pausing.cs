@@ -8,6 +8,7 @@ public class Pausing : MonoBehaviour
 {
     public bool paused;
     int levelDisplaying;
+    public GameObject pauseMenu;
     public TextMeshProUGUI pauseText;
     public Button saveButton;
     public Button loadButton;
@@ -42,6 +43,8 @@ public class Pausing : MonoBehaviour
             Time.timeScale = 0;
             paused = true;
             pauseText.gameObject.SetActive(true);
+            attacking.healthDisplay.gameObject.SetActive(true);
+            Collectibles.Instance.starDisplay.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             currentScene = SceneManager.GetActiveScene();
             if (currentScene.name == "HubWorld")
@@ -73,6 +76,14 @@ public class Pausing : MonoBehaviour
             objectiveText3.gameObject.SetActive(false);
             nextButton.gameObject.SetActive(false);
             backButton.gameObject.SetActive(false);
+            if (!Attacking.permanentHealthDisplay)
+            {
+                attacking.healthDisplay.gameObject.SetActive(false);
+            }
+            if (!Collectibles.permanentStarDisplay)
+            {
+                Collectibles.Instance.starDisplay.gameObject.SetActive(false);
+            }
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
@@ -211,7 +222,7 @@ public class Pausing : MonoBehaviour
     {
         SceneManager.LoadScene("HubWorld");
         Time.timeScale = 1;
-        Attacking.Instance.health = Attacking.Instance.healthCap;
+        attacking.health = attacking.healthCap;
     }
 
     public void ToMenu()
