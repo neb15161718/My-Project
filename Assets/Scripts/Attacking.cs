@@ -46,6 +46,7 @@ public class Attacking : MonoBehaviour
         {
             healthDisplay.gameObject.SetActive(false);
         }
+        healthDisplay.transform.localScale = healthDisplay.transform.localScale * healthDisplayScale * 2;
     }
 
     void Update()

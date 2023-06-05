@@ -318,7 +318,7 @@ PrefabInstance:
     - target: {fileID: 1456913430, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: pauseMenu
       value: 
-      objectReference: {fileID: 1358217835}
+      objectReference: {fileID: 0}
     - target: {fileID: 1456913430, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: pauseText
       value: 
@@ -944,11 +944,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1358217835 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 249631354966925232, guid: de41dc0e4d6ca69468288ee5edd6f0a3, type: 3}
-  m_PrefabInstance: {fileID: 9094624715896178446}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1361542900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.018141448
+      value: -0.018141456
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1425,7 +1420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752065901, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000011175871
+      value: 0.000000007450581
       objectReference: {fileID: 0}
     - target: {fileID: 809824566, guid: 563b471a2714625409af055d1ab037ff, type: 3}
       propertyPath: m_LocalPosition.x

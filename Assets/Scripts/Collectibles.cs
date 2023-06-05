@@ -18,6 +18,7 @@ public class Collectibles : MonoBehaviour
         {
             starDisplay.gameObject.SetActive(false);
         }
+        starDisplay.transform.localScale = starDisplay.transform.localScale * starDisplayScale * 2;
     }
 
     void Update()
