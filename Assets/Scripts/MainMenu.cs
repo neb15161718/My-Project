@@ -37,6 +37,8 @@ public class MainMenu : MonoBehaviour
     public TMP_InputField inputField;
     public TMP_Dropdown difficultyDropdown;
     public TMP_Dropdown graphicsDropdown;
+    public Slider healthSlider;
+    public Slider starSlider;
     public RenderPipelineAsset[] qualityLevels;
     string[] names;
     bool deleting;
@@ -74,6 +76,8 @@ public class MainMenu : MonoBehaviour
         int difficulty = 1;
         Attacking.permanentHealthDisplay = true;
         Collectibles.permanentStarDisplay = true;
+        Attacking.healthDisplayScale = 0.5f;
+        Collectibles.starDisplayScale = 0.5f;
         if (PlayerPrefs.HasKey("Graphics"))
         {
             graphics = PlayerPrefs.GetInt("Graphics");
@@ -111,6 +115,14 @@ public class MainMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("StarDisplay"))
         {
             Collectibles.permanentStarDisplay = Convert.ToBoolean(PlayerPrefs.GetInt("StarDisplay"));
+        }
+        if (PlayerPrefs.HasKey("HealthScale"))
+        {
+            Attacking.healthDisplayScale = PlayerPrefs.GetFloat("HealthScale");
+        }
+        if (PlayerPrefs.HasKey("StarScale"))
+        {
+            Collectibles.starDisplayScale = PlayerPrefs.GetFloat("StarScale");
         }
     }
 
@@ -429,6 +441,8 @@ public class MainMenu : MonoBehaviour
         {
             starDisplayButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enable Permanent Star Display";
         }
+        healthSlider.value = Attacking.healthDisplayScale;
+        starSlider.value = Collectibles.starDisplayScale;
     }
 
     public void HealthDisplay()
@@ -461,6 +475,18 @@ public class MainMenu : MonoBehaviour
             Collectibles.permanentStarDisplay = true;
             PlayerPrefs.SetInt("StarDisplay", 1);
         }
+    }
+
+    public void HealthScale()
+    {
+        Attacking.healthDisplayScale = healthSlider.value;
+        PlayerPrefs.SetFloat("HealthScale", healthSlider.value);
+    }
+
+    public void StarScale()
+    {
+        Collectibles.starDisplayScale = starSlider.value;
+        PlayerPrefs.SetFloat("StarScale", starSlider.value);
     }
 
     public void LoadFile(int file)

@@ -19,6 +19,7 @@ public class Attacking : MonoBehaviour
     public static float healthMultiplier;
     public static float enemyHealthMultiplier;
     public static bool permanentHealthDisplay;
+    public static float healthDisplayScale;
     IEnumerator attackingCooldown;
     bool attacking;
 
