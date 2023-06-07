@@ -86,6 +86,7 @@ public class Soldier : Enemy
         attacking = true;
         StartCoroutine(attackCoroutine);
     }
+
     IEnumerator Die()
     {
         dead = true;
@@ -94,6 +95,7 @@ public class Soldier : Enemy
         yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
     }
+
     IEnumerator Rotate()
     {
         while (!dead & !touchingPlayer)

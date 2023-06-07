@@ -63,6 +63,7 @@ public class Grunt : Enemy
         attacking = true;
         StartCoroutine(attackCoroutine);
     }
+
     IEnumerator Die()
     {
         dead = true;

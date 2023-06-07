@@ -321,6 +321,9 @@ public class MainMenu : MonoBehaviour
         playerInput.enabled = false;
         settings.gameObject.SetActive(false);
         rebind.gameObject.SetActive(true);
+        rebindJumpText.text = jumpReference.action.GetBindingDisplayString();
+        rebindSprintText.text = sprintReference.action.GetBindingDisplayString();
+        rebindAttackText.text = attackReference.action.GetBindingDisplayString();
     }
 
     public void StartRebind(string action)
