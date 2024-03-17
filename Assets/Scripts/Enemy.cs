@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
             if (diff < 100 & (this is not Soldier))
             {
                 transform.LookAt(target);
-                transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
+                transform.position = Vector3.MoveTowards(transform.position, target, 0.05f); //Move towards player
                 animator.SetBool("Moving", true);
                 moving = true;
             }

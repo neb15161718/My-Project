@@ -51,7 +51,7 @@ public class Movement : MonoBehaviour
             }
             if (!grounded & (transform.eulerAngles.y >= jumpDirection + 90 || transform.eulerAngles.y <= jumpDirection - 90))
             {
-                characterRigidbody.AddForce (movementVector.normalized * 100f, ForceMode.Force);
+                characterRigidbody.AddForce (movementVector.normalized * 100f, ForceMode.Force); //Slow down the player if they turn in midair
             }
             else
             {

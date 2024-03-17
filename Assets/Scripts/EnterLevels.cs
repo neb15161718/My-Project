@@ -21,7 +21,7 @@ public class EnterLevels : MonoBehaviour
             }
             else
             {
-                alertText.text = "You need 2 stars to enter this level";
+                alertText.text = "You need 2 stars to enter this level"; //Block the player from entering if they don't have enough stars
                 StartCoroutine(DisplayAlert());
             }
         }
@@ -33,7 +33,7 @@ public class EnterLevels : MonoBehaviour
             }
             else
             {
-                alertText.text = "You need 4 stars to enter this level";
+                alertText.text = "You need 4 stars to enter this level"; //Block the player from entering if they don't have enough stars
                 StartCoroutine(DisplayAlert());
             }
         }
@@ -45,7 +45,7 @@ public class EnterLevels : MonoBehaviour
             }
             else
             {
-                alertText.text = "You need 6 stars to enter this level";
+                alertText.text = "You need 6 stars to enter this level"; //Block the player from entering if they don't have enough stars
                 StartCoroutine(DisplayAlert());
             }
         }

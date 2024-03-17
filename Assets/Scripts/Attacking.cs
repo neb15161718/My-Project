@@ -82,7 +82,7 @@ public class Attacking : MonoBehaviour
             closest = FindClosestEnemy();
             if (closest != null)
             {
-                transform.LookAt(closest.transform.position);
+                transform.LookAt(closest.transform.position); //Face the player towards the closest enemy
             }
         }
     }
@@ -145,7 +145,7 @@ public class Attacking : MonoBehaviour
     IEnumerator DisplayHealth()
     {
         healthDisplay.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2); //Wait 2 seconds before hiding the heatlh display again
         healthDisplay.gameObject.SetActive(false);
     }
 }

@@ -21,7 +21,7 @@ public class SaveGame : MonoBehaviour
             {
                 if (star == "1")
                 {
-                    Collectibles.stars = Collectibles.stars + 1;
+                    Collectibles.stars = Collectibles.stars + 1; //Count the number of stars in the save file
                 }
             }
             SceneManager.LoadScene("HubWorld");
